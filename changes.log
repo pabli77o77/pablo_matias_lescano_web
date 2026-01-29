@@ -1,5 +1,14 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-01-29] - Visual Polish & Tailwind Integration
+- **Framework & Styles**:
+  - Instalación y configuración de **Tailwind CSS v3** (Stable).
+  - Migración de estilos globales e inyección de directivas en `styles.scss`.
+- **Layout Repair (Desktop)**:
+  - Implementación de contenedores `max-w-7xl mx-auto` en Header y Profile para alinear el contenido centralmente.
+  - Fix de márgenes laterales (`px-6`) y altura consistente (`h-20`) en el Header.
+  - Sincronización visual entre el Header Sticky y el Hero Section.
+
 ## [2026-01-29] - Responsive Header & UX Refactor
 - **HeaderComponent**:
   - Migración completa de estilos personalizados a Tailwind CSS.
