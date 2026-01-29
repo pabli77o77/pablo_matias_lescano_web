@@ -1,31 +1,61 @@
-<header class="app-header">
-  <div class="container header-content">
-    <a routerLink="/" class="logo">
-      <span class="logo-symbol">&lt;/&gt;</span>
-      <span class="logo-text">Pablo Lescano</span>
+<header class="sticky top-0 z-50 w-full border-b border-white/5 bg-[#020617]/85 backdrop-blur-md transition-all duration-300">
+  <div class="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-3 sm:flex-row sm:gap-0">
+    
+    <!-- Logo -->
+    <a routerLink="/" class="group flex items-center gap-2 text-lg font-bold text-slate-100 transition-colors hover:text-sky-400 sm:text-xl">
+      <span class="font-mono text-sky-400 transition-transform group-hover:scale-110">&lt;/&gt;</span>
+      <span class="tracking-tight">Pablo Lescano</span>
     </a>
 
-    <nav class="main-nav">
-      <ul>
-        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Profile</a></li>
-      </ul>
-    </nav>
+    <!-- Nav (Hidden on Mobile/Small for now if empty, or integrated) -->
+    <!-- Assuming "Profile" link was redundant with Logo in the original simplified requirement, 
+         but keeping semantic nav if needed. Currently original nav just pointed to home. 
+         Focusing on Actions as per prompt. -->
 
-    <div class="actions">
+    <!-- Actions Area -->
+    <div class="flex items-center gap-6 sm:gap-8">
+      
       <!-- Language Switcher -->
-      <div class="lang-switch">
-        <button [class.active]="store.language() === 'es'" (click)="store.setLanguage('es')">ES</button>
-        <span class="divider">/</span>
-        <button [class.active]="store.language() === 'en'" (click)="store.setLanguage('en')">EN</button>
+      <div class="flex items-center gap-1.5 font-mono text-sm font-medium text-slate-500">
+        <button 
+          class="transition-colors hover:text-slate-200"
+          [class.text-sky-400]="store.language() === 'es'"
+          [class.font-bold]="store.language() === 'es'"
+          (click)="store.setLanguage('es')">
+          ES
+        </button>
+        <span class="select-none text-slate-700">/</span>
+        <button 
+          class="transition-colors hover:text-slate-200"
+          [class.text-sky-400]="store.language() === 'en'"
+          [class.font-bold]="store.language() === 'en'"
+          (click)="store.setLanguage('en')">
+          EN
+        </button>
       </div>
 
-      <button class="btn-switcher" (click)="toggleMode()">
-        @if (store.viewMode() === 'frontend') {
-          <span class="icon">&lt;/&gt;</span> {{ store.ui().switchToData }}
-        } @else {
-          <span class="icon">🎨</span> {{ store.ui().switchToFrontend }}
-        }
+      <!-- View Mode Switcher -->
+      <button 
+        (click)="toggleMode()"
+        class="group relative flex items-center gap-2 overflow-hidden rounded-full border border-sky-500/30 bg-sky-500/10 px-4 py-1.5 text-xs font-bold text-sky-400 transition-all hover:border-sky-400 hover:bg-sky-500 hover:text-white hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] sm:px-5 sm:py-2 sm:text-sm">
+        
+        <!-- Icon always visible -->
+        <span class="text-base sm:text-lg">
+          @if (store.viewMode() === 'frontend') { &lt;/&gt; } @else { 🎨 }
+        </span>
+
+        <!-- Text Responsive: Hidden on very small screens, Short on mobile, Full on Desktop -->
+        <span class="whitespace-nowrap">
+          @if (store.viewMode() === 'frontend') {
+            <span class="inline sm:hidden">Ver Código</span>
+            <span class="hidden sm:inline">{{ store.ui().switchToData }}</span>
+          } @else {
+            <span class="inline sm:hidden">Diseño</span>
+            <span class="hidden sm:inline">{{ store.ui().switchToFrontend }}</span>
+          }
+        </span>
       </button>
+
     </div>
   </div>
 </header>

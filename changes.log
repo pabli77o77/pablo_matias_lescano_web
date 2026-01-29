@@ -1,5 +1,13 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-01-29] - Responsive Header & UX Refactor
+- **HeaderComponent**:
+  - Migración completa de estilos personalizados a Tailwind CSS.
+  - Implementación de layout responsivo: `flex-col` en mobile y `flex-row` en desktop.
+  - Optimización de espacio en mobile mediante reducción dinámica de texto en el botón de modo de vista.
+  - Mejora de legibilidad con `backdrop-blur` y fondos semi-transparentes para el estado sticky.
+  - Ajuste de espaciado dinámico entre selectores de idioma y botones de acción.
+
 ## [2026-01-29] - Analytics CI/CD Preparation
 - **Environment Configuration**:
   - Reemplazo de 'G-MEASUREMENT-ID' por 'GA_ID_PLACEHOLDER' en `environment.prod.ts`.
