@@ -1,5 +1,10 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-01-29] - Analytics CI/CD Preparation
+- **Environment Configuration**:
+  - Reemplazo de 'G-MEASUREMENT-ID' por 'GA_ID_PLACEHOLDER' en `environment.prod.ts`.
+  - Preparación del código para inyección dinámica de secretos en el pipeline de AWS.
+
 ## [2026-01-29] - Initial Git Push
 - **Project Structure**:
   - Inicialización del repositorio Git.
