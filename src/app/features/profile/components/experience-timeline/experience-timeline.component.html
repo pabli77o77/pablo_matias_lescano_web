@@ -1,0 +1,59 @@
+<div class="timeline-container">
+  @for (job of experiences; track job.company) {
+    <div class="timeline-item" [class.current]="job.isCurrent">
+      <!-- Marcador Visual (Punto + Línea) -->
+      <div class="timeline-marker">
+        <div class="dot"></div>
+        <div class="line"></div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="timeline-content">
+        <div class="header">
+          <div class="role-company">
+            <div class="title-row">
+              <h3 class="role">{{ job.role }}</h3>
+              <!-- BADGE ESPECÍFICO (Hardcoded por requerimiento visual sin cambiar modelo) -->
+              @if (job.company === 'Stack Overflight') {
+                <div class="achievement-badge">
+                  <span class="icon">🚀</span> Logro: 95% Optimización
+                </div>
+              }
+            </div>
+            <h4 class="company">{{ job.company }}</h4>
+          </div>
+          
+          <div class="meta">
+            <span class="period">{{ job.durationLabel }}</span>
+            @if (job.isCurrent) {
+              <span class="badge-pulse">Current</span>
+            }
+          </div>
+        </div>
+
+        <p class="description">{{ job.description }}</p>
+
+        <!-- Tech Stack Tags -->
+        @if (job.stack.length) {
+          <div class="tech-stack">
+            @for (tech of job.stack; track tech) {
+              <span class="tech-tag">{{ tech }}</span>
+            }
+          </div>
+        }
+
+        <!-- Metrics / Achievements -->
+        @if (job.metrics.length) {
+          <ul class="metrics-list">
+            @for (metric of job.metrics; track metric) {
+              <li>
+                <span class="bullet-icon">➤</span>
+                {{ metric }}
+              </li>
+            }
+          </ul>
+        }
+      </div>
+    </div>
+  }
+</div>

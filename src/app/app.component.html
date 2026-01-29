@@ -1,0 +1,32 @@
+@if (store.isLoading()) {
+  <div class="loading">Cargando perfil profesional...</div>
+}
+
+@if (store.error()) {
+  <div class="error">{{ store.error() }}</div>
+}
+
+@if (store.data(); as user) {
+  <main class="container">
+    <header class="header">
+      <h1>{{ user.personal_info.name }}</h1>
+      <h2>{{ user.personal_info.title }}</h2>
+      <p class="summary">{{ user.summary }}</p>
+      
+      <div class="metrics">
+        <strong>Total Experience:</strong> {{ user.totalExperienceYears }} years
+      </div>
+    </header>
+
+    <section class="experience">
+      <h3>Experience Highlights</h3>
+      @for (job of user.experience; track job.company) {
+        <article class="job">
+          <h4>{{ job.role }} at {{ job.company }}</h4>
+          <span class="duration">{{ job.durationLabel }}</span>
+          @if (job.isCurrent) { <span class="badge">Actual</span> }
+        </article>
+      }
+    </section>
+  </main>
+}

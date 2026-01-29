@@ -1,0 +1,75 @@
+@if (store.isLoading()) {
+  <div class="loading container">
+    <div class="skeleton-header"></div>
+    <div class="skeleton-lines"></div>
+  </div>
+}
+
+@if (store.error()) {
+  <div class="error container">{{ store.error() }}</div>
+}
+
+@if (store.data(); as user) {
+  <div class="container">
+    
+    @if (store.viewMode() === 'frontend') {
+      <!-- MODO FRONTEND (Premium UI) -->
+      <div class="frontend-view">
+        <header class="profile-header animate-enter">
+          <span class="hero-name">{{ user.personal_info.name }}</span>
+          <h1 class="hero-title">
+            Senior Software Engineer | <span class="highlight">Tech Lead</span>
+          </h1>
+          <p class="summary">{{ user.summary }}</p>
+          
+          <!-- KPI Row (New) -->
+          <div class="kpi-container">
+            <div class="kpi-card">
+              <span class="kpi-value">+{{ user.totalExperienceYears }}</span>
+              <span class="kpi-label">{{ store.ui().kpiExp }}</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-value">95%</span>
+              <span class="kpi-label">{{ store.ui().kpiOptimization }}</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-value">+95</span>
+              <span class="kpi-label">{{ store.ui().kpiSources }}</span>
+            </div>
+          </div>
+          
+          <div class="actions-row">
+            <button class="btn-primary shimmer-btn" (click)="store.toggleViewMode()">
+              <span class="icon">⚡</span> {{ store.ui().switchToData }}
+            </button>
+            
+            <a [href]="cvUrl()" [download]="cvFileName()" class="btn-secondary" (click)="downloadCV()">
+              <span class="icon">📄</span> {{ store.ui().downloadCV }}
+            </a>
+          </div>
+        </header>
+
+        <section class="skills-section animate-enter delay-1">
+          <h3>{{ store.ui().techStack }}</h3>
+          <app-tech-stack [skills]="user.skills"></app-tech-stack>
+        </section>
+
+        <section class="experience-section animate-enter delay-2">
+          <h3>{{ store.ui().experienceHighlights }}</h3>
+          <app-experience-timeline [experiences]="user.experience"></app-experience-timeline>
+        </section>
+      </div>
+    } @else {
+      <!-- MODO DATA (Architecture View) -->
+      <div class="data-view-container animate-enter">
+        <header class="data-header">
+          <h2 class="text-accent">{{ store.ui().architectureView }}</h2>
+          <p>{{ store.ui().jsonDesc }}</p>
+        </header>
+        
+        <app-data-view [data]="user"></app-data-view>
+      </div>
+    }
+
+  </div>
+}

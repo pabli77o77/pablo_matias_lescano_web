@@ -1,0 +1,193 @@
+.profile-header {
+  margin-bottom: var(--spacing-xl);
+  
+  /* Jerarquía Invertida */
+  .hero-name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-mono);
+  }
+
+  .hero-title {
+    font-size: 3.5rem; /* Aumentado para impacto */
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+    
+    .highlight {
+      color: var(--color-accent);
+      display: inline-block; /* Para asegurar renderizado correcto del gradiente si se usa */
+    }
+  }
+
+  .summary {
+    color: var(--color-text-secondary);
+    max-width: 800px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* KPI Container */
+.kpi-container {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+  flex-wrap: wrap;
+
+  .kpi-card {
+    display: flex;
+    flex-direction: column;
+    
+    .kpi-value {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 800; /* Aumentado peso */
+      color: var(--color-text-primary);
+      line-height: 1.2; /* Cohesión */
+    }
+
+    .kpi-label {
+      font-size: 0.875rem;
+      color: var(--color-text-primary); /* Base color */
+      opacity: 0.6; /* Reducir opacidad para jerarquía */
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+.skills-section, .experience-section {
+  margin-bottom: var(--spacing-xl);
+
+  h3 {
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.5rem;
+    position: relative;
+    padding-left: 1rem;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 24px;
+      background: var(--color-accent);
+      border-radius: 2px;
+    }
+  }
+}
+
+/* Skeleton Loading Simples */
+.loading {
+  padding-top: var(--spacing-xl);
+  opacity: 0.5;
+  
+  .skeleton-header {
+    height: 40px;
+    width: 60%;
+    background: var(--color-bg-secondary);
+    margin-bottom: var(--spacing-md);
+    border-radius: 4px;
+    animation: pulse-bg 1.5s infinite;
+  }
+  
+  .skeleton-lines {
+    height: 20px;
+    width: 100%;
+    background: var(--color-bg-secondary);
+    border-radius: 4px;
+    animation: pulse-bg 1.5s infinite;
+  }
+}
+
+@keyframes pulse-bg {
+  0% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.5; }
+}
+
+/* Actions Row (Botones) */
+.actions-row {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition-premium);
+  border: 1px solid var(--color-accent);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+  }
+}
+
+/* Shimmer Effect for CTA */
+.shimmer-btn {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    animation: shimmer 5s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-primary);
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--color-border);
+  backdrop-filter: var(--backdrop-blur);
+  transition: var(--transition-premium);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-text-muted);
+    color: var(--color-text-primary);
+  }
+}

@@ -1,0 +1,16 @@
+<section class="bento-grid">
+  @for (category of skills | keyvalue; track category.key) {
+    <div class="bento-card" [class]="getCategoryClass(category.key)">
+      <h3 class="category-title">{{ formatCategory(category.key) }}</h3>
+      
+      <div class="skills-list">
+        @for (tech of category.value; track tech) {
+          <div class="skill-item">
+            <span class="skill-icon" [innerHTML]="getIcon(tech)"></span>
+            <span class="skill-name">{{ tech }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</section>

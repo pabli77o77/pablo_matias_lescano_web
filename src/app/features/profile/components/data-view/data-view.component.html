@@ -1,0 +1,71 @@
+<div class="data-view-wrapper">
+  
+  <!-- 1. JSON PROFILE -->
+  <div class="code-window">
+    <div class="window-header clickable" (click)="toggleSection('json-profile')">
+      <div class="header-left">
+        <span class="toggle-icon">{{ expandedSection() === 'json-profile' ? '▼' : '▶' }}</span>
+        <span class="file-icon json">{{ '{' }}{{ '}' }}</span>
+        <span class="file-name">pablo_lescano_profile.json</span>
+      </div>
+      <div class="lang">JSON</div>
+    </div>
+    
+    @if (expandedSection() === 'json-profile') {
+      <div class="window-body fade-in">
+        <pre><code>{{ formattedData() }}</code></pre>
+      </div>
+    }
+  </div>
+
+  <!-- 2. CODE SNIPPETS -->
+  @for (snippet of snippets; track snippet.id) {
+    <div class="code-window">
+      <div class="window-header clickable" (click)="toggleSection(snippet.id)">
+        <div class="header-left">
+          <span class="toggle-icon">{{ expandedSection() === snippet.id ? '▼' : '▶' }}</span>
+          <span class="file-icon code">&lt;/&gt;</span>
+          <span class="file-name">{{ snippet.title }}</span>
+          @if (snippet.id === 'medallion') {
+            <span class="impact-badge">Most Viewed / Critical Logic</span>
+          }
+        </div>
+        <div class="lang">{{ snippet.language | uppercase }}</div>
+      </div>
+      
+      @if (expandedSection() === snippet.id) {
+        <div class="window-body fade-in">
+          
+          <!-- ARCHITECT NOTE (New Feature) -->
+          @if (getNote(snippet.id); as note) {
+            <div class="architect-note-container">
+              <div class="note-header">
+                <div class="header-left">
+                  <span class="note-icon">⚡</span>
+                  <span>Architect Note</span>
+                </div>
+                <button (click)="copyConcept(note)" class="copy-concept-btn" [class.copied]="copyState() === 'copied'" title="Copiar razonamiento técnico">
+                  <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    @if (copyState() === 'copied') {
+                      <path d="M5 13l4 4L19 7"></path> <!-- Check Icon -->
+                    } @else {
+                      <path d="M8 10a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-8z"></path>
+                      <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"></path>
+                    }
+                  </svg>
+                  <span>{{ copyState() === 'copied' ? 'Copiado' : 'Copiar Concepto' }}</span>
+                </button>
+              </div>
+              <blockquote class="note-content">
+                "{{ note }}"
+              </blockquote>
+            </div>
+          }
+
+          <div class="snippet-desc">// {{ snippet.description }}</div>
+          <pre><code>{{ snippet.code }}</code></pre>
+        </div>
+      }
+    </div>
+  }
+</div>

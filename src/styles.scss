@@ -1,0 +1,96 @@
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* --- Color Palette (Premium High-Tech) --- */
+  --color-bg-primary: #020617;        /* Deep Slate para profundidad */
+  --color-bg-secondary: #0f172a;      /* Lighter Slate for cards */
+  --color-bg-tertiary: #1e293b;       /* Borders/Dividers */
+
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  --color-accent: #38bdf8;            /* Electric Blue */
+  --color-accent-hover: #0ea5e9;
+  --color-accent-glow: rgba(56, 189, 248, 0.15);
+  
+  --color-border: rgba(255, 255, 255, 0.1);
+
+  /* --- Typography --- */
+  --font-main: 'Inter', sans-serif;
+  --font-mono: 'Fira Code', monospace; /* Para datos y KPIs */
+
+  /* --- Spacing --- */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 4rem;
+
+  /* --- Layout --- */
+  --header-height: 70px;
+  --max-width: 1200px;
+  --border-radius: 12px;
+  
+  /* --- Effects --- */
+  --transition-premium: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --backdrop-blur: blur(12px);
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-main);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-accent-hover);
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+/* Utilities */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* --- Animations --- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-enter {
+  opacity: 0; /* Empieza invisible */
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }

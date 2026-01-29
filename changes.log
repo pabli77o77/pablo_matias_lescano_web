@@ -1,0 +1,57 @@
+# Registro de Cambios - Web Pablo Matias Lescano
+
+## [2026-01-29] - Initial Git Push
+- **Project Structure**:
+  - Inicialización del repositorio Git.
+  - Configuración de remotos y ramas (`main`, `develop`).
+  - Primer push a GitHub.
+
+## [2026-01-28] - Dynamic Content Injection
+- **ProfileMapper**:
+  - Implementación de lógica de reemplazo de placeholders en tiempo de ejecución.
+  - Inyección dinámica de `totalExperienceYears` en el resumen profesional (`{{years}}`), asegurando consistencia entre el Hero y los datos calculados.
+- **Limpieza de Deuda Técnica**:
+  - Eliminación de llamadas manuales a `AnalyticsService` en `HeaderComponent` a favor del sistema reactivo centralizado en `ProfileComponent` (Effects).
+
+## [2026-01-28] - Business Analytics Implementation (GA4)
+- **Analytics Service Robustez**:
+  - Implementación de `AnalyticsService` desacoplado y seguro para SSR (`isPlatformBrowser`).
+  - Definición de eventos de negocio tipados: `track_cv_download`, `track_tech_interaction`, `track_external_link`.
+  - Integración reactiva con `ProfileStore` mediante `Angular Effects` para el tracking automático de cambio de vistas.
+- **Configuración de Aplicación**:
+  - Uso de `APP_INITIALIZER` en `app.config.ts` para garantizar la carga temprana del script de GA4.
+  - Tracking manual de vistas (`page_view`) sincronizado con eventos del Router para SPAs.
+
+## [2026-01-28] - Mobile Optimization & UX Polish
+- **Jerarquía Mobile**:
+  - Re-ordenamiento estratégico de cards en móviles: Cloud & Data (1º), Architecture (2º).
+  - Uso de `auto-rows: min-content` para eliminar espacios en blanco.
+- **Mejoras de Legibilidad**:
+  - Ajuste de contraste en `:hover` de Bento Cards (título blanco con sombra profunda).
+  - Reducción de opacidad en gradientes de fondo (0.1) para evitar interferencia con el texto.
+- **Eliminación de Redundancia**:
+  - Remoción del botón duplicado "Ver Diseño Visual" en la sección de arquitectura.
+- **Visuales de Impacto**:
+  - Inclusión de badge "Most Viewed / Critical Logic" en el snippet de pipeline de datos.
+  - Cierre de huecos visuales en desktop mediante alineación de alturas y expansión de columnas.
+
+## [2026-01-28] - Strategic Micro-Copy Refactor
+- **Elevación de Perfil Profesional**:
+  - Se reescribieron las descripciones de experiencia en `cv-data-es.json` y `cv-data-en.json` para pasar de un tono "pasivo" a uno de "alto impacto/liderazgo".
+  - Enfoque en resultados de negocio: Reducción de deuda técnica, optimización de performance (95%), y arquitectura cloud a escala.
+
+## [2026-01-28] - Polish & Architect Notes
+- **Architect Notes System**:
+  - Implementación de notas contextuales en la vista "Data & Architecture".
+  - Mapeo de explicaciones técnicas para RxJS, AWS Pipeline y Angular Signals.
+  - Botón "Copiar Concepto" con feedback visual.
+
+## [2026-01-28] - Premium Visual Refactor & Bento Grid
+- **Identidad Visual "High-Tech"**: Paleta Fondo Deep Slate (#020617) y Acento Electric Blue (#38bdf8).
+- **Hero Section Redesign**: Inversión de jerarquía y KPIs destacados.
+- **Tech Stack Bento Grid**: Transformación de lista a grilla asimétrica modular.
+
+## [2026-01-28] - Reparación de Entorno de Pruebas y Store
+- **Infraestructura de Tests**: Corrección de `setup-jest.ts` para Angular 18.
+- **ProfileStore**: Reconstrucción completa con Angular Signals y persistencia.
+- **Validación**: 38/38 tests unitarios pasando exitosamente.

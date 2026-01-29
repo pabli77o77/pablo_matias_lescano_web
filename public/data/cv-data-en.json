@@ -1,0 +1,66 @@
+{
+  "personal_info": {
+    "name": "Pablo Matias Lescano",
+    "title": "Senior Software Engineer | Tech Lead (Cloud & Data)",
+    "location": "Buenos Aires, Argentina",
+    "email": "pablolescano87@protonmail.com",
+    "phone": "+54 9 11 6000 3204",
+    "linkedin": "linkedin.com/in/pablo-matias-lescano",
+    "career_start": "2014-03"
+  },
+  "summary": "Senior Software Engineer and Tech Lead with +{{years}} years of experience evolving enterprise architectures towards modern Cloud & Data solutions on AWS. Expert in DDD, CQRS, and Medallion architectures.",
+  "experience": [
+    {
+      "company": "Stack Overflight",
+      "period": { "start": "2025-07", "end": "2026-01" },
+      "role": "Tech Lead (Data & Cloud) / Senior Full Stack Engineer",
+      "domain": "Data Engineering / Web",
+      "stack": ["AWS (Lambda, EventBridge, S3)", "Python (Pandas)", "PostgreSQL", "Angular", "TypeScript"],
+      "is_lead": true,
+      "metrics": [
+        "Technical Leadership of a distributed squad of 4 developers, establishing engineering standards (Code Reviews, GitFlow) that accelerated the Data team's delivery speed.",
+        "Cloud Data Architecture (AWS): Design and implementation of a Serverless solution (Lambda, EventBridge, S3) under Medallion pattern, orchestrating ingestion of +95 critical data sources.",
+        "Performance Engineering: Massive 95% optimization in response times for analytical reports on volumes of +6.8M records using advanced partitioning and tuning strategies in PostgreSQL."
+      ],
+      "description": "Led the design of a comprehensive data platform and the development of critical components for booking engines (Plus Ultra, Jambojet)."
+    },
+    {
+      "company": "Newshore (FLYR)",
+      "period": { "start": "2022-06", "end": "2025-07" },
+      "role": "Tech Lead / Senior Software Engineer",
+      "domain": "Airlines",
+      "stack": [".NET Framework 4.7", "ASP.NET Web API 2", "DDD", "CQRS", "Angular 7+", "Azure DevOps"],
+      "is_lead": true,
+      "metrics": [
+        "Technical Leadership & Culture: Active mentorship of 4 developers and raising standards through strict Code Reviews.",
+        "Mission-Critical Scalability: Implementation of asynchronous CQRS patterns with MediatR to manage high-concurrency booking flows for global airline engines (SunExpress).",
+        "Strategic Modernization: Leadership in decoupling legacy systems towards a modular Angular SPA architecture, facilitating white-label theming and reducing deployment time for new clients."
+      ],
+      "description": "Specialized in White Label Booking Engines for airlines like SunExpress."
+    },
+    {
+      "company": "Intégrity Seguros",
+      "period": { "start": "2019-08", "end": "2022-06" },
+      "role": "Senior Full Stack Developer",
+      "domain": "Insurance",
+      "stack": [".NET Framework", ".NET Core", "SQL Server", "Web APIs"],
+      "is_lead": false,
+      "metrics": [
+        "Refactoring & Efficiency: Integral migration of core modules to .NET Core, resulting in significant technical debt reduction and notable improvement in corporate portal maintainability."
+      ],
+      "description": "Development and maintenance of the official web portal and architectural refactoring."
+    }
+  ],
+  "skills": {
+    "cloud_data": ["AWS Lambda", "S3", "RDS", "EventBridge", "Step Functions", "Python", "Pandas", "PostgreSQL"],
+    "backend": [".NET Core", "C#", "ASP.NET Web API", "Entity Framework", "Microservicios"],
+    "frontend": ["Angular (v7 - v17)", "TypeScript", "RxJS", "Signals", "SASS", "HTML5/CSS3"],
+    "architecture": ["DDD", "CQRS", "Clean Architecture", "Event-Driven", "SOLID"],
+    "devops": ["CI/CD", "Azure DevOps", "GitHub Actions", "Docker", "GitFlow"]
+  },
+  "education": "Higher Technical Degree in Software Development (ISTEA), 2014-2021",
+  "languages": [
+    { "language": "English", "level": "Professional Proficiency" },
+    { "language": "French", "level": "Basic" }
+  ]
+}

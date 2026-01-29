@@ -1,0 +1,11 @@
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  /* El padding se maneja internamente en las páginas con .container */
+  padding-top: var(--spacing-lg);
+}

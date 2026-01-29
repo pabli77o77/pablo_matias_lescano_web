@@ -1,0 +1,66 @@
+{
+  "personal_info": {
+    "name": "Pablo Matias Lescano",
+    "title": "Senior Software Engineer | Tech Lead (Cloud & Data)",
+    "location": "Buenos Aires, Argentina",
+    "email": "pablolescano87@protonmail.com",
+    "phone": "+54 9 11 6000 3204",
+    "linkedin": "linkedin.com/in/pablo-matias-lescano",
+    "career_start": "2014-03"
+  },
+  "summary": "Ingeniero de Software Senior y Tech Lead con +{{years}} años de experiencia evolucionando arquitecturas empresariales hacia soluciones modernas de Cloud & Data en AWS. Experto en DDD, CQRS y arquitecturas Medallion.",
+  "experience": [
+    {
+      "company": "Stack Overflight",
+      "period": { "start": "2025-07", "end": "2026-01" },
+      "role": "Tech Lead (Data & Cloud) / Ingeniero Full Stack Senior",
+      "domain": "Data Engineering / Web",
+      "stack": ["AWS (Lambda, EventBridge, S3)", "Python (Pandas)", "PostgreSQL", "Angular", "TypeScript"],
+      "is_lead": true,
+      "metrics": [
+        "Liderazgo técnico de un squad distribuido de 4 desarrolladores, estableciendo estándares de ingeniería (Code Reviews, GitFlow) que aceleraron la velocidad de entrega del equipo de Data.",
+        "Arquitectura de Datos Cloud (AWS): Diseño e implementación de una solución Serverless (Lambda, EventBridge, S3) bajo patrón Medallion, orquestando la ingesta de +95 fuentes de datos críticas.",
+        "Ingeniería de Performance: Optimización masiva del 95% en tiempos de respuesta para reportes analíticos sobre volúmenes de +6.8M de registros mediante estrategias avanzadas de particionamiento y tuning en PostgreSQL."
+      ],
+      "description": "Lideré el diseño de una plataforma de datos completa y el desarrollo de componentes críticos para motores de reserva (Plus Ultra, Jambojet)."
+    },
+    {
+      "company": "Newshore (FLYR)",
+      "period": { "start": "2022-06", "end": "2025-07" },
+      "role": "Tech Lead / Ingeniero de Software Senior",
+      "domain": "Airlines",
+      "stack": [".NET Framework 4.7", "ASP.NET Web API 2", "DDD", "CQRS", "Angular 7+", "Azure DevOps"],
+      "is_lead": true,
+      "metrics": [
+        "Liderazgo Técnico & Cultura: Mentoreo activo de 4 desarrolladores y elevación de estándares mediante Code Reviews estrictos.",
+        "Escalabilidad de Misión Crítica: Implementación de patrones asíncronos CQRS con MediatR para gestionar flujos de reserva de alta concurrencia en motores de aerolíneas globales (SunExpress).",
+        "Modernización Estratégica: Liderazgo en el desacople de sistemas legacy hacia una arquitectura Angular SPA modular, facilitando la tematización white-label y reduciendo el tiempo de despliegue para nuevos clientes."
+      ],
+      "description": "Especializado en Motores de Reserva White Label para aerolíneas como SunExpress."
+    },
+    {
+      "company": "Intégrity Seguros",
+      "period": { "start": "2019-08", "end": "2022-06" },
+      "role": "Senior Full Stack Developer",
+      "domain": "Insurance",
+      "stack": [".NET Framework", ".NET Core", "SQL Server", "Web APIs"],
+      "is_lead": false,
+      "metrics": [
+        "Refactorización y Eficiencia: Migración integral de módulos core hacia .NET Core, resultando en una reducción significativa de la deuda técnica y una mejora notable en la mantenibilidad del portal corporativo."
+      ],
+      "description": "Desarrollo y mantenimiento del portal web oficial y refactorización de arquitectura."
+    }
+  ],
+  "skills": {
+    "cloud_data": ["AWS Lambda", "S3", "RDS", "EventBridge", "Step Functions", "Python", "Pandas", "PostgreSQL"],
+    "backend": [".NET Core", "C#", "ASP.NET Web API", "Entity Framework", "Microservicios"],
+    "frontend": ["Angular (v7 - v17)", "TypeScript", "RxJS", "Signals", "SASS", "HTML5/CSS3"],
+    "architecture": ["DDD", "CQRS", "Clean Architecture", "Event-Driven", "SOLID"],
+    "devops": ["CI/CD", "Azure DevOps", "GitHub Actions", "Docker", "GitFlow"]
+  },
+  "education": "Tecnicatura Superior en Desarrollo de Software (ISTEA), 2014-2021",
+  "languages": [
+    { "language": "Inglés", "level": "Competencia Profesional" },
+    { "language": "Francés", "level": "Básico" }
+  ]
+}

@@ -1,0 +1,152 @@
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: var(--spacing-lg);
+
+  /* Responsive: En móviles se apila con jerarquía estratégica */
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-auto-rows: min-content; /* Evita espacios vacíos */
+    
+    .bento-card {
+      grid-column: span 1 !important;
+      grid-row: span 1 !important;
+    }
+
+    /* Prioridad de visualización en móvil */
+    .bento-large { order: 1; }  /* Cloud & Data */
+    .bento-wide  { order: 2; }  /* Architecture Patterns */
+    .bento-medium { order: 3; } /* Backend/Frontend */
+    .bento-small { order: 4; }  /* DevOps */
+  }
+}
+
+.bento-card {
+  /* Museum Effect: Gradient Border */
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)) padding-box,
+    linear-gradient(to bottom right, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02)) border-box;
+  border: 1px solid transparent;
+  
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: var(--backdrop-blur);
+  transition: var(--transition-premium);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Asegura que llenen el row */
+
+  &:hover {
+    /* Opacidad reducida del gradiente para no 'comer' el texto */
+    background: 
+      linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)) padding-box,
+      linear-gradient(to bottom right, var(--color-accent), rgba(56, 189, 248, 0.1)) border-box;
+      
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--color-accent-glow);
+
+    .category-title {
+      color: #ffffff !important; /* Fix legibilidad */
+      text-shadow: 0 0 15px rgba(0,0,0,0.8);
+    }
+  }
+}
+
+/* Clases de Layout Asimétrico */
+.bento-large {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%) padding-box,
+              linear-gradient(to bottom right, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02)) border-box;
+  
+  .category-title { font-size: 1.1rem; }
+  .skill-icon ::ng-deep svg { width: 32px; height: 32px; }
+}
+
+.bento-medium {
+  grid-column: span 2;
+}
+
+.bento-wide {
+  grid-column: span 4;
+}
+
+.bento-small {
+  grid-column: span 2; /* Ajuste para desktop: 2 para cerrar huecos junto a Frontend/DevOps */
+}
+
+.category-title {
+  color: var(--color-accent);
+  margin-bottom: var(--spacing-md);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  transition: color 0.3s ease;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 16px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--color-accent);
+  }
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-content: flex-start;
+  height: 100%;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1rem;
+  min-width: 80px;
+  flex: 1 1 80px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+    border-color: var(--color-accent);
+    transform: scale(1.05);
+    
+    .skill-icon ::ng-deep svg { fill: var(--color-bg-primary); }
+  }
+}
+
+.skill-name {
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  text-align: center;
+  font-weight: 500;
+}
+
+.skill-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  ::ng-deep svg {
+    width: 24px;
+    height: 24px;
+    transition: fill 0.3s;
+    fill: var(--color-text-primary);
+  }
+}

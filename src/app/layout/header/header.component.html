@@ -1,0 +1,31 @@
+<header class="app-header">
+  <div class="container header-content">
+    <a routerLink="/" class="logo">
+      <span class="logo-symbol">&lt;/&gt;</span>
+      <span class="logo-text">Pablo Lescano</span>
+    </a>
+
+    <nav class="main-nav">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Profile</a></li>
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <!-- Language Switcher -->
+      <div class="lang-switch">
+        <button [class.active]="store.language() === 'es'" (click)="store.setLanguage('es')">ES</button>
+        <span class="divider">/</span>
+        <button [class.active]="store.language() === 'en'" (click)="store.setLanguage('en')">EN</button>
+      </div>
+
+      <button class="btn-switcher" (click)="toggleMode()">
+        @if (store.viewMode() === 'frontend') {
+          <span class="icon">&lt;/&gt;</span> {{ store.ui().switchToData }}
+        } @else {
+          <span class="icon">🎨</span> {{ store.ui().switchToFrontend }}
+        }
+      </button>
+    </div>
+  </div>
+</header>
