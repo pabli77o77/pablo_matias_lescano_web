@@ -13,7 +13,8 @@ export const UI_LABELS = {
     at: 'en',
     kpiExp: 'Años de Exp.',
     kpiOptimization: 'Optimización Data',
-    kpiSources: 'Fuentes AWS'
+    kpiSources: 'Fuentes AWS',
+    securityBadge: 'Infra & Seguridad: AWS Serverless | SecurityHeaders: A | Mozilla: B+ (SPA Opt.)'
   },
   en: {
     totalExperience: 'Total Experience',
@@ -29,7 +30,8 @@ export const UI_LABELS = {
     at: 'at',
     kpiExp: 'Years of Exp.',
     kpiOptimization: 'Data Optimization',
-    kpiSources: 'AWS Sources'
+    kpiSources: 'AWS Sources',
+    securityBadge: 'Infra & Security: AWS Serverless | SecurityHeaders: A | Mozilla: B+ (SPA Opt.)'
   }
 };
 

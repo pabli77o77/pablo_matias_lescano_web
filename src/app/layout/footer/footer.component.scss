@@ -12,6 +12,25 @@
   align-items: center;
 }
 
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs, 0.5rem);
+}
+
+.security-badge {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .icon {
+    font-size: 0.9rem;
+  }
+}
+
 .social-links {
   display: flex;
   gap: var(--spacing-md);

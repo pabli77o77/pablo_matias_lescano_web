@@ -1,7 +1,12 @@
 <footer class="app-footer">
   <div class="container footer-content">
-    <div class="copyright">
-      &copy; {{ currentYear }} Pablo Matias Lescano. Built with Angular 18 (Signals) & DDD.
+    <div class="footer-info">
+      <div class="copyright">
+        &copy; {{ currentYear }} Pablo Matias Lescano. Built with Angular 18 (Signals) & DDD.
+      </div>
+      <div class="security-badge">
+        <span class="icon">🛡️</span> {{ store.ui().securityBadge }}
+      </div>
     </div>
     <div class="social-links">
       <a href="https://linkedin.com/in/pablo-matias-lescano" target="_blank" rel="noopener">LinkedIn</a>
