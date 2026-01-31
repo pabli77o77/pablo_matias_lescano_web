@@ -2,29 +2,37 @@
   <div class="modal-architecture scale-in" (click)="$event.stopPropagation()">
     <header class="modal-header">
       <div class="header-content">
-        <h2>{{ store.ui().architectureModal.title }}</h2>
-        <span class="status-badge">{{ store.ui().architectureModal.subtitle }}</span>
+        <h2 class="flex items-center gap-3">
+          <span class="text-2xl">{{ content().icon }}</span>
+          {{ content().title }}
+        </h2>
+        <span class="status-badge">{{ content().subtitle }}</span>
       </div>
       <button class="close-btn" (click)="onClose()" aria-label="Close modal">×</button>
     </header>
 
     <div class="modal-body">
-      @for (section of store.ui().architectureModal.sections; track section.title) {
-        <div class="report-section">
-          <h3 class="section-title">
-            <span class="icon">{{ section.icon }}</span>
-            {{ section.title }}
-          </h3>
-          <p class="tech-detail">{{ section.content }}</p>
-        </div>
-      }
+      <div class="report-section">
+        <p class="tech-detail mb-6 text-gray-300 leading-relaxed">{{ content().description }}</p>
+        
+        <h3 class="text-sm font-mono text-blue-400 uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Key Technical Specs</h3>
+        
+        <ul class="space-y-3">
+          @for (feature of content().features; track feature.label) {
+            <li class="flex items-start justify-between p-3 rounded bg-white/5 border border-white/5">
+              <span class="text-gray-400 font-medium">{{ feature.label }}</span>
+              <span class="text-white font-mono font-semibold">{{ feature.value }}</span>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
 
     <footer class="modal-footer">
       <div class="tech-signature">
-        <span>AWS Well-Architected</span>
+        <span>Verified Architecture</span>
         <span class="divider">|</span>
-        <span>SRE Certified</span>
+        <span>Production Ready</span>
       </div>
     </footer>
   </div>
