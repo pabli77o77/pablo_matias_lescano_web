@@ -1,74 +1,48 @@
 .app-footer {
-  border-top: 1px solid var(--color-border);
-  padding: var(--spacing-lg) 0;
-  margin-top: var(--spacing-xl);
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
+  /* Glassmorphism & Positioning */
+  @apply w-full border-t border-white/10 bg-[#0a0a0a]/80 backdrop-blur-md mt-auto py-10;
 }
 
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.footer-security-info {
-  margin-top: 4px;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  transition: all 0.3s ease;
-
-  &.clickable {
-    cursor: pointer;
-    
-    &:hover {
-      color: rgba(255, 255, 255, 0.9);
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 4px;
-      padding: 2px 8px;
-      margin: 2px -8px; /* Compensate padding to keep alignment */
-    }
-  }
-
-  .security-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    
-    strong {
-      color: rgba(255, 255, 255, 0.7);
-    }
-  }
-
-  .divider {
-    color: rgba(255, 255, 255, 0.2);
-    user-select: none;
-  }
-
-  .text-accent {
-    color: var(--color-accent);
-    font-weight: 700;
+/* Custom glow effect for the pills on hover */
+.status-pill {
+  @apply relative flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/5 bg-white/[0.02] 
+         transition-all duration-300 cursor-pointer select-none;
+  
+  &:hover {
+    @apply border-white/10 bg-white/[0.05] translate-y-[-1px] shadow-lg shadow-black/20;
   }
 }
 
-.social-links {
-  display: flex;
-  gap: var(--spacing-md);
-
-  a {
-    color: var(--color-text-secondary);
-    &:hover {
-      color: var(--color-accent);
-    }
+/* Specific Status Colors */
+.status-pill.security {
+  &:hover {
+    @apply border-emerald-500/20 bg-emerald-500/[0.05];
+    .label { @apply text-emerald-200/80; }
+    .value { @apply text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.3)]; }
   }
+}
+
+.status-pill.infra {
+  &:hover {
+    @apply border-amber-500/20 bg-amber-500/[0.05];
+    .label { @apply text-amber-200/80; }
+    .value { @apply text-amber-400; }
+  }
+}
+
+.status-pill.observatory {
+  &:hover {
+    @apply border-blue-500/20 bg-blue-500/[0.05];
+    .label { @apply text-blue-200/80; }
+    .value { @apply text-blue-400; }
+  }
+}
+
+/* Typography Helpers */
+.mono-label {
+  @apply text-[10px] sm:text-xs font-mono text-gray-500 tracking-tight transition-colors duration-300;
+}
+
+.mono-value {
+  @apply font-semibold text-gray-300 ml-1 transition-all duration-300;
 }

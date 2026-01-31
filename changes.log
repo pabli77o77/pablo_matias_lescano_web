@@ -1,6 +1,21 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
-## [2026-01-31] - Elite Architecture Modal
+## [2026-01-31] - Premium Footer & Dynamic Architecture System
+- **Footer "Command Center" UI**:
+  - Rediseño completo a layout horizontal de eje único con padding extendido (`py-10`).
+  - Implementación de **Interactive Status Pills** con animaciones de pulso y Glassmorphism.
+  - Alineación simétrica de Badges Técnicos, Copyright y LinkedIn.
+- **Dynamic Architecture Modal (Refactor)**:
+  - Transformación de `ArchitectureModalComponent` a componente "stateless" (Presentational).
+  - Implementación de **Angular Signals** para inyección dinámica de contenido (`FooterDetail`).
+  - Lógica de diccionario de datos separada para AWS (Infra), Security (Hardening) y Mozilla (Performance).
+- **Technical Badges**:
+  - **Infra**: Detalle sobre Serverless y CloudFront.
+  - **Security**: Visualización de Grade A+ y Headers.
+  - **Mozilla**: Métricas de optimización SPA y Web Vitals.
+- **ID Commit**: `57e0677`
+
+## [2026-01-29] - Visual Polish & Tailwind Integration
 - **Shared Component**:
   - Implementación de `ArchitectureModalComponent` para validación de seniority técnica.
   - Contenido: Networking & Edge (CloudFront), Security Hardening (CSP, HSTS) y FinOps.

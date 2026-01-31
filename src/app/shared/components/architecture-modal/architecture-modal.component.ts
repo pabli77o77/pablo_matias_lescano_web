@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { ProfileStore } from '@core/store/profile.store';
+import { Component, EventEmitter, Output, input } from '@angular/core';
+import { FooterDetail } from '@layout/footer/footer.model';
 
 @Component({
   selector: 'app-architecture-modal',
@@ -8,7 +8,7 @@ import { ProfileStore } from '@core/store/profile.store';
   styleUrl: './architecture-modal.component.scss'
 })
 export class ArchitectureModalComponent {
-  store = inject(ProfileStore);
+  content = input.required<FooterDetail>();
   @Output() close = new EventEmitter<void>();
 
   onClose() {
