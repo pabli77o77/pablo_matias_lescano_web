@@ -1,11 +1,30 @@
 <footer class="app-footer">
   <div class="container footer-content">
-    <div class="copyright">
-      &copy; {{ currentYear }} Pablo Matias Lescano. Built with Angular 18 (Signals) & DDD.
+    <div class="footer-info">
+      <div class="copyright">
+        &copy; {{ currentYear }} Pablo Matias Lescano. Built with Angular 18 (Signals) & DDD.
+      </div>
+      
+      <!-- Clickable Trigger -->
+      <div class="footer-security-info clickable" (click)="openModal()" role="button" tabindex="0" (keydown.enter)="openModal()">
+        <span class="security-badge">
+          <span class="icon">🛡️</span> 
+          {{ store.ui().securityInfra }}: <strong>AWS Serverless</strong>
+        </span>
+        <span class="divider">|</span>
+        <span class="grade">SecurityHeaders: <span class="text-accent">A</span></span>
+        <span class="divider">|</span>
+        <span class="grade">Mozilla: <span class="text-accent">B+</span> {{ store.ui().spaOptimized }}</span>
+      </div>
     </div>
+    
     <div class="social-links">
       <a href="https://linkedin.com/in/pablo-matias-lescano" target="_blank" rel="noopener">LinkedIn</a>
-      <!-- <a href="https://github.com/..." target="_blank">GitHub</a> -->
     </div>
   </div>
 </footer>
+
+@if (isModalOpen()) {
+  <app-architecture-modal (close)="closeModal()"></app-architecture-modal>
+}
+

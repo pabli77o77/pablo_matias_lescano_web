@@ -12,6 +12,55 @@
   align-items: center;
 }
 
+.footer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-security-info {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+
+  &.clickable {
+    cursor: pointer;
+    
+    &:hover {
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin: 2px -8px; /* Compensate padding to keep alignment */
+    }
+  }
+
+  .security-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    
+    strong {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  .divider {
+    color: rgba(255, 255, 255, 0.2);
+    user-select: none;
+  }
+
+  .text-accent {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+}
+
 .social-links {
   display: flex;
   gap: var(--spacing-md);
