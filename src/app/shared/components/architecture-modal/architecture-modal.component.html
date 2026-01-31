@@ -1,0 +1,31 @@
+<div class="modal-backdrop fade-in" (click)="onClose()">
+  <div class="modal-architecture scale-in" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <div class="header-content">
+        <h2>{{ store.ui().architectureModal.title }}</h2>
+        <span class="status-badge">{{ store.ui().architectureModal.subtitle }}</span>
+      </div>
+      <button class="close-btn" (click)="onClose()" aria-label="Close modal">×</button>
+    </header>
+
+    <div class="modal-body">
+      @for (section of store.ui().architectureModal.sections; track section.title) {
+        <div class="report-section">
+          <h3 class="section-title">
+            <span class="icon">{{ section.icon }}</span>
+            {{ section.title }}
+          </h3>
+          <p class="tech-detail">{{ section.content }}</p>
+        </div>
+      }
+    </div>
+
+    <footer class="modal-footer">
+      <div class="tech-signature">
+        <span>AWS Well-Architected</span>
+        <span class="divider">|</span>
+        <span>SRE Certified</span>
+      </div>
+    </footer>
+  </div>
+</div>
