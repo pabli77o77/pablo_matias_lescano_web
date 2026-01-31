@@ -1,5 +1,11 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-01-31] - Security Infrastructure Badge
+- **Footer**:
+  - Implementación de Badge de Seguridad/Infraestructura (AWS Serverless, SecurityHeaders A).
+  - Integración dinámica de textos (i18n) mediante `ProfileStore`.
+  - ID Commit: `bc341df`
+
 ## [2026-01-29] - Visual Polish & Tailwind Integration
 - **Framework & Styles**:
   - Instalación y configuración de **Tailwind CSS v3** (Stable).
