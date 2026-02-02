@@ -1,5 +1,12 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 19:07] - Footer Modals i18n Fix
+- **Internationalization**:
+  - Refactor de `FOOTER_DATA` estático a estructura localizada (`es`/`en`).
+  - Implementación de `activeDetail` como **Signal Computada** dependiente del idioma global.
+  - Traducción completa de los 3 modales técnicos (Infraestructura, Seguridad, Rendimiento).
+  - Actualización dinámica del contenido del modal abierto al cambiar el idioma de la app.
+
 ## [2026-02-02 19:02] - Antivirus-Compatible PDF Open
 - **Compatibility Fix**:
   - Reemplazo de lógica de descarga `Blob` por `window.open(url, '_blank')`.
