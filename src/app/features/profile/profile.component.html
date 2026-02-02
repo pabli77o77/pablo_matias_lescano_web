@@ -50,10 +50,10 @@
             <button class="btn-primary shimmer-btn" (click)="store.toggleViewMode()">
               <span class="icon">⚡</span> {{ store.ui().switchToData }}
             </button>
-
-            <a [href]="cvUrl()" [download]="cvFileName()" class="btn-secondary" (click)="downloadCV()">
+            
+            <button class="btn-secondary" (click)="downloadCV()">
               <span class="icon">📄</span> {{ store.ui().downloadCV }}
-            </a>
+            </button>
           </div>
         </header>
 

@@ -1,5 +1,12 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 18:55] - Robust Programmatic PDF Download
+- **Engineering Fix**:
+  - Reemplazo de enlaces estáticos por **descarga programática vía HttpClient (Blob)**.
+  - Prevención definitiva de archivos corruptos (HTML servido como PDF) mediante validación de flujo binario.
+  - Manejo de errores explícito (Console/Alert) en caso de fallo en la red o ruta inexistente.
+  - Refactor de UI: Conversión de enlace `<a>` a `<button>` semántico en `ProfileComponent`.
+
 ## [2026-02-02 16:43] - Hero Bio Technical Polish
 - **Content Update**:
   - Ajuste en la referencia técnica de Angular para una mayor perennidad del perfil ("Angular 18" -> "Angular").
