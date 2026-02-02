@@ -1,5 +1,12 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:17] - Premium 'Completion Glow' Success State
+- **UX Emotional Design**:
+  - Implementación de la vista de éxito "Completion Glow" con narrativa de infraestructura serverless.
+  - Inclusión de **Micro-animaciones**: Checkmark con `bounce` y anillo exterior con `ping` dinámico.
+  - Control de flujo manual: Sustitución del auto-close por un botón de acción "Volver al sitio".
+  - Refactor de lógica de estados mediante Signal computada `isSubmitted`.
+
 ## [2026-02-02 16:14] - Dynamic i18n for Contact Widget
 - **Internationalization (i18n)**:
   - Implementación de sistema de traducción local (`I18N_TEXT`) en `ContactButtonComponent`.

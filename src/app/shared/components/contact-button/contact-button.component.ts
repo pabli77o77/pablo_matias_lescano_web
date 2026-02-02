@@ -13,8 +13,9 @@ const I18N_TEXT = {
     placeholderMessage: '¿Cómo puedo ayudarte?',
     sendButton: 'Enviar Mensaje',
     sending: 'Enviando...',
-    successTitle: '¡Mensaje Enviado!',
-    successSubtitle: 'Te responderé a la brevedad.',
+    successTitle: '¡Recibido!',
+    successDescription: 'Tu mensaje ha cruzado la infraestructura serverless con éxito. Revisaré los detalles y te escribiré pronto.',
+    backToSite: 'Volver al sitio',
     error: 'Error de conexión. Por favor intenta más tarde.',
     linkedin: 'LinkedIn',
     whatsapp: 'WhatsApp'
@@ -28,8 +29,9 @@ const I18N_TEXT = {
     placeholderMessage: 'How can I help you?',
     sendButton: 'Send Message',
     sending: 'Sending...',
-    successTitle: 'Message Sent!',
-    successSubtitle: 'I\'ll get back to you soon.',
+    successTitle: 'Received!',
+    successDescription: 'Your message has successfully crossed the serverless infrastructure. I\'ll review the details and get back to you soon.',
+    backToSite: 'Back to site',
     error: 'Connection error. Please try again later.',
     linkedin: 'LinkedIn',
     whatsapp: 'WhatsApp'
@@ -52,13 +54,16 @@ export class ContactButtonComponent {
   isHovered = signal(false);
   submitStatus = signal<'idle' | 'success' | 'error'>('idle');
 
+  // Computed Success State
+  isSubmitted = computed(() => this.submitStatus() === 'success');
+
   // I18n Computed Signal
   uiText = computed(() => {
     const lang = this.store.language();
     return I18N_TEXT[lang] || I18N_TEXT.en;
   });
 
-  // Form Data Signals (Pattern: Zero Friction)
+  // Form Data Signals
   name = signal('');
   email = signal('');
   message = signal('');
@@ -98,12 +103,14 @@ export class ContactButtonComponent {
   }
 
   resetFormState() {
-    this.submitStatus.set('idle');
-    // Opcional: Limpiar campos al cerrar, o mantenerlos como borrador (User Friendly)
-    if (this.submitStatus() === 'success') {
+    // Solo reseteamos si no estamos en medio de un envío exitoso que el usuario está viendo
+    if (this.submitStatus() === 'success' && !this.isOpen()) {
+      this.submitStatus.set('idle');
       this.name.set('');
       this.email.set('');
       this.message.set('');
+    } else if (this.submitStatus() === 'error') {
+      this.submitStatus.set('idle');
     }
   }
 
@@ -119,10 +126,6 @@ export class ContactButtonComponent {
     this.contactService.sendEmail(formData).subscribe({
       next: () => {
         this.submitStatus.set('success');
-        this.name.set('');
-        this.email.set('');
-        this.message.set('');
-        setTimeout(() => this.closeModal(), 2500);
       },
       error: (err) => {
         console.error('[ContactAPI Error]:', {
@@ -139,7 +142,6 @@ export class ContactButtonComponent {
     window.open(url, '_blank');
   }
 
-  // Helper para templates (evita el cast manual $any($event.target).value repetitivo en HTML)
   updateSignal(sig: any, event: Event) {
     const value = (event.target as HTMLInputElement).value;
     sig.set(value);
