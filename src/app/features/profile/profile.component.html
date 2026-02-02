@@ -11,18 +11,26 @@
 
 @if (store.data(); as user) {
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    
+
     @if (store.viewMode() === 'frontend') {
       <!-- MODO FRONTEND (Premium UI) -->
       <div class="frontend-view">
-        <header class="profile-header animate-enter">
-          <span class="hero-name">{{ user.personal_info.name }}</span>
-          <h1 class="hero-title">
-            Senior Software Engineer | <span class="highlight">Tech Lead</span>
+        <header class="profile-header">
+          <span class="hero-name animate-in fade-in slide-in-from-bottom-3 duration-700 fill-mode-both">{{ user.personal_info.name }}</span>
+
+          <h1 class="text-white font-extrabold text-4xl md:text-5xl lg:text-6xl tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-both">
+            Software Architect & <span class="text-sky-400">Tech Lead</span>
           </h1>
-          <p class="summary">{{ user.summary }}</p>
-          
-          <!-- KPI Row (New) -->
+
+          <p class="text-slate-400 text-lg md:text-xl leading-relaxed max-w-[700px] mb-8 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-300 fill-mode-both">
+            +11 años transformando arquitecturas empresariales en soluciones
+            <span class="text-sky-400 font-medium">AWS Cloud & Data</span> de alto rendimiento.
+            Experto en <span class="text-sky-400 font-medium">DDD</span>,
+            <span class="text-sky-400 font-medium">CQRS</span> y
+            <span class="text-sky-400 font-medium">Angular (Signals)</span>.
+          </p>
+
+          <!-- KPI Row -->
           <div class="kpi-container">
             <div class="kpi-card">
               <span class="kpi-value">+{{ user.totalExperienceYears }}</span>
@@ -37,12 +45,12 @@
               <span class="kpi-label">{{ store.ui().kpiSources }}</span>
             </div>
           </div>
-          
+
           <div class="actions-row">
             <button class="btn-primary shimmer-btn" (click)="store.toggleViewMode()">
               <span class="icon">⚡</span> {{ store.ui().switchToData }}
             </button>
-            
+
             <a [href]="cvUrl()" [download]="cvFileName()" class="btn-secondary" (click)="downloadCV()">
               <span class="icon">📄</span> {{ store.ui().downloadCV }}
             </a>
@@ -66,7 +74,7 @@
           <h2 class="text-accent">{{ store.ui().architectureView }}</h2>
           <p>{{ store.ui().jsonDesc }}</p>
         </header>
-        
+
         <app-data-view [data]="user"></app-data-view>
       </div>
     }

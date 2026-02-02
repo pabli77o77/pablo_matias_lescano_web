@@ -1,5 +1,84 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:43] - Hero Bio Technical Polish
+- **Content Update**:
+  - Ajuste en la referencia técnica de Angular para una mayor perennidad del perfil ("Angular 18" -> "Angular").
+
+## [2026-02-02 16:38] - Strategic Hero Bio Refactor
+- **Authority Branding**:
+  - Rediseño de la jerarquía de títulos: Software Architect & Tech Lead como encabezado principal.
+  - Implementación de copy estratégico enfocado en impacto de negocio (+11 años, arquitecturas empresariales).
+- **UI/UX Polish**:
+  - Contraste selectivo: `white` para títulos, `slate-400` para cuerpo de texto.
+  - Enfoque visual (Highlights): Aplicación de `sky-400` en términos técnicos críticos (AWS, DDD, CQRS, Signals).
+  - Optimización de legibilidad: Limitación de `max-width` a 700px y aumento de `line-height`.
+  - Motion: Animaciones escalonadas `fade-in slide-in` para mejorar la percepción de carga.
+
+## [2026-02-02 16:33] - Social Buttons Ghost UI & Security
+- **Contact Widget Polish**:
+  - Implementación de estilo "Ghost-to-Solid" para botones de redes sociales (LinkedIn Blue / WhatsApp Green).
+  - Configuración de navegación segura (`noopener noreferrer`) mediante `navigateTo(url)`.
+  - Definición de constantes estrictas para URLs de contacto.
+  - Mejora de accesibilidad (A11y) con atributos `aria-label` dinámicos basados en i18n.
+
+## [2026-02-02 16:29] - Footer Badges Premium Refactor
+- **UI/UX Polish (Stripe/Linear Style)**:
+  - Transformación de badges estáticos a botones interactivos con semántica HTML5.
+  - Implementación de patrón **Reveal Interaction**: Flecha indicadora que se desliza (`w-0` a `w-3`) al hacer hover.
+  - Efectos hápticos visuales: Zoom suave (`scale-105`), sombras tintadas (`shadow-cyan/emerald/blue`) y bordes iluminados.
+  - Iconografía dinámica: Transición de gris apagado a colores vibrantes al interactuar.
+
+## [2026-02-02 16:17] - Premium 'Completion Glow' Success State
+- **UX Emotional Design**:
+  - Implementación de la vista de éxito "Completion Glow" con narrativa de infraestructura serverless.
+  - Inclusión de **Micro-animaciones**: Checkmark con `bounce` y anillo exterior con `ping` dinámico.
+  - Control de flujo manual: Sustitución del auto-close por un botón de acción "Volver al sitio".
+  - Refactor de lógica de estados mediante Signal computada `isSubmitted`.
+
+## [2026-02-02 16:14] - Dynamic i18n for Contact Widget
+- **Internationalization (i18n)**:
+  - Implementación de sistema de traducción local (`I18N_TEXT`) en `ContactButtonComponent`.
+  - Inyección de `ProfileStore` para sincronización reactiva con el idioma global de la aplicación.
+  - Traducción completa de UI: Títulos, placeholders, botones, mensajes de éxito/error y tooltips.
+  - Soporte nativo para ES/EN sin necesidad de recargar la página.
+
+## [2026-02-02 16:11] - Zero Friction Contact UX Refactor
+- **UX Optimization**:
+  - Implementación de patrón "Zero Friction" eliminando `ReactiveFormsModule` a favor de **Angular Signals** puros.
+  - Validación en tiempo real (`computed signal`) para habilitación instantánea del botón de envío.
+  - **Visual Feedback**:
+    - Cambio de paleta de botón: De Blue estándar a **Cyan/Active** para indicar estado "Listo".
+    - Estados visuales claros: Disabled (Slate/Borde) vs Active (Cyan/Shadow).
+    - Eliminación de validaciones ruidosas en inputs; el botón es el único indicador de estado.
+
+## [2026-02-02 15:32] - AWS Lambda Contact Form Integration
+- **Contact System Backend**:
+  - Implementación de `ContactService` para comunicación con AWS API Gateway (`execute-api.us-east-1`).
+  - Lógica de manejo de estados de carga (`isLoading` Signal) y finalización con RxJS `finalize`.
+- **Contact Widget UI Updates**:
+  - Conexión del formulario reactivo con el servicio real.
+  - Implementación de feedback visual:
+    - **Loading**: Deshabilitación de controles y Spinner de carga en el botón.
+    - **Success**: Reemplazo del formulario con mensaje de confirmación animado (`fade-in slide-in`).
+    - **Error**: Alerta visual contextual para reintentar.
+
+## [2026-02-02 15:07] - Contact Widget Implementation
+- **Shared Component**:
+  - Creación de `ContactButtonComponent` (FAB) fijo en esquina inferior derecha.
+  - Implementación de **Interactive Contact Modal** con Glassmorphism (`backdrop-blur-xl`, `bg-slate-900/95`).
+  - Lógica reactiva con **Angular Signals** (`isOpen`, `isHovered`) para transiciones fluidas.
+  - Formulario de contacto integrado con `ReactiveFormsModule` y validaciones.
+  - Accesos directos a LinkedIn y WhatsApp con estilo consistente (Dark Mode/Premium).
+  - Efectos visuales de "Pulse" para notificaciones y animaciones de rotación en ícono.
+- **Layout Integration**:
+  - Inyección global en `MainLayoutComponent` (`z-50` layer) para disponibilidad en toda la app.
+
+## [2026-02-02 14:13] - Fix Critical CV Download Path
+- **Assets Serving Fix**:
+  - Cambio de ruta relativa (`docs/cv...`) a ruta absoluta (`/docs/cv...`) en `ProfileComponent`.
+  - Solución al bug "Archivo Corrupto" causado por el enrutador de Angular resolviendo assets estáticos relativos contra sub-rutas dinámicas (evitando el fallback a `index.html`).
+  - Eliminación de parámetro `timestamp` query string para asegurar compatibilidad total con servidores estáticos.
+
 ## [2026-01-31] - Premium Footer & Dynamic Architecture System
 - **Footer "Command Center" UI**:
   - Rediseño completo a layout horizontal de eje único con padding extendido (`py-10`).

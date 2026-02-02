@@ -26,13 +26,13 @@ export class ProfileComponent {
       : 'Pablo_Lescano_CV_Espanol.pdf';
   });
 
-  // URL del CV dinámica basada en el idioma actual + Cache Busting
+  // URL del CV dinámica basada en el idioma actual
   cvUrl = computed(() => {
     const lang = this.store.language();
-    const timestamp = new Date().getTime(); // Cache busting simple
+    // Usamos rutas absolutas desde la raíz para evitar problemas con rutas relativas
     return lang === 'en' 
-      ? `docs/cv_pablo_lescano_en.pdf?t=${timestamp}`
-      : `docs/cv_pablo_lescano.pdf?t=${timestamp}`;
+      ? '/docs/cv_pablo_lescano_en.pdf'
+      : '/docs/cv_pablo_lescano.pdf';
   });
 
   constructor() {

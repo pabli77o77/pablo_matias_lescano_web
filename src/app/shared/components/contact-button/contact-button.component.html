@@ -1,0 +1,159 @@
+<!-- Backdrop Invisible para cerrar al hacer click fuera -->
+@if (isOpen()) {
+    <div class="fixed inset-0 z-[55]" (click)="closeModal()"></div>
+}
+
+<!-- Modal Container -->
+<div [class]="modalClasses()">
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-slate-800 bg-slate-900/50 flex justify-between items-center">
+        <div>
+            <h3 class="text-lg font-semibold text-slate-100 tracking-tight">{{ uiText().title }}</h3>
+            <p class="text-xs text-slate-400 font-mono">{{ uiText().subtitle }}</p>
+        </div>
+        <button (click)="closeModal($event)" class="text-slate-400 hover:text-white transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <!-- Body -->
+    <div class="p-6">
+        
+        @if (!isSubmitted()) {
+            <div class="space-y-6">
+                <!-- Social Actions -->
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- LinkedIn: Ghost Blue -->
+                    <button (click)="navigateTo(links.LINKEDIN)"
+                            [attr.aria-label]="uiText().linkedinAria"
+                            class="flex items-center justify-center gap-2.5 p-3 rounded-xl bg-[#0077b5]/10 border border-[#0077b5]/30 text-[#0077b5] hover:bg-[#0077b5] hover:text-white transition-all duration-300 group shadow-sm hover:shadow-[#0077b5]/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        <span class="text-sm font-semibold tracking-wide">{{ uiText().linkedin }}</span>
+                    </button>
+                    
+                    <!-- WhatsApp: Ghost Green -->
+                    <button (click)="navigateTo(links.WHATSAPP)"
+                            [attr.aria-label]="uiText().whatsappAria"
+                            class="flex items-center justify-center gap-2.5 p-3 rounded-xl bg-[#25d366]/10 border border-[#25d366]/30 text-[#25d366] hover:bg-[#25d366] hover:text-white transition-all duration-300 group shadow-sm hover:shadow-[#25d366]/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                        <span class="text-sm font-semibold tracking-wide">{{ uiText().whatsapp }}</span>
+                    </button>
+                </div>
+
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <span class="w-full border-t border-slate-700/50"></span>
+                    </div>
+                    <div class="relative flex justify-center text-xs uppercase">
+                        <span class="bg-slate-900 px-2 text-slate-500 font-mono">{{ uiText().orMessage }}</span>
+                    </div>
+                </div>
+
+                <!-- Form (Zero Friction Layout) -->
+                <div class="space-y-4">
+                    <div class="space-y-1">
+                        <input [value]="name()" (input)="updateSignal(name, $event)" 
+                               type="text" [placeholder]="uiText().placeholderName" 
+                               [class.opacity-50]="isLoading()"
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all">
+                    </div>
+                    <div class="space-y-1">
+                        <input [value]="email()" (input)="updateSignal(email, $event)"
+                               type="email" [placeholder]="uiText().placeholderEmail" 
+                               [class.opacity-50]="isLoading()"
+                               class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all">
+                    </div>
+                    <div class="space-y-1">
+                        <textarea [value]="message()" (input)="updateSignal(message, $event)"
+                                  rows="3" [placeholder]="uiText().placeholderMessage" 
+                                  [class.opacity-50]="isLoading()"
+                                  class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all resize-none"></textarea>
+                    </div>
+
+                    @if (submitStatus() === 'error') {
+                        <div class="p-2 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">
+                            {{ uiText().error }}
+                        </div>
+                    }
+
+                    <button (click)="sendContact()"
+                            [disabled]="!isFormValid() || isLoading()"
+                            class="w-full py-2.5 rounded-lg font-medium text-sm transition-all duration-300 flex justify-center items-center shadow-lg group relative overflow-hidden"
+                            [ngClass]="{
+                              'bg-cyan-600 text-white hover:bg-cyan-500 shadow-cyan-900/20 hover:shadow-cyan-500/40': isFormValid() && !isLoading(),
+                              'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700': !isFormValid() || isLoading()
+                            }">
+                        
+                        @if (isLoading()) {
+                            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span class="ml-2">{{ uiText().sending }}</span>
+                        } @else {
+                            <span>{{ uiText().sendButton }}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                                 class="ml-2 transition-transform duration-300"
+                                 [class.translate-x-1]="isFormValid() && !isLoading()"
+                                 [class.opacity-0]="!isFormValid()">
+                                 <line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        }
+                    </button>
+                </div>
+            </div>
+        } @else {
+            <!-- Completion Glow (Success State) -->
+            <div class="flex flex-col items-center justify-center py-10 text-center animate-in fade-in zoom-in duration-500">
+                <div class="w-20 h-20 bg-cyan-500/10 rounded-full flex items-center justify-center mb-6 border border-cyan-500/20 relative">
+                    <div class="absolute inset-0 rounded-full bg-cyan-500/5 animate-ping"></div>
+                    <svg class="w-10 h-10 text-cyan-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-white mb-3 tracking-tight">{{ uiText().successTitle }}</h2>
+                <p class="text-slate-400 text-sm leading-relaxed mb-8 px-4">
+                    {{ uiText().successDescription }}
+                </p>
+                
+                <button (click)="closeModal($event)" 
+                        class="px-8 py-2.5 bg-slate-800 text-slate-200 rounded-xl border border-slate-700 hover:bg-slate-700 hover:text-white transition-all duration-300 font-medium text-sm shadow-lg shadow-black/20">
+                    {{ uiText().backToSite }}
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Floating Action Button (FAB) -->
+<button (click)="toggleModal()"
+        (mouseenter)="isHovered.set(true)"
+        (mouseleave)="isHovered.set(false)"
+        [class.rotate-45]="isOpen()"
+        class="fixed bottom-6 right-6 z-[50] flex h-14 w-14 items-center justify-center rounded-full border border-slate-600/50 bg-slate-800/80 text-blue-400 backdrop-blur-md shadow-lg shadow-black/40 transition-all duration-300 hover:scale-105 hover:bg-slate-700 hover:text-blue-300 hover:shadow-blue-500/20 hover:border-blue-500/50 focus:outline-none focus:ring-2 focus:ring-blue-500/50 group">
+    
+    <!-- Icono cambiante (Animado con CSS o simple) -->
+    <div class="relative h-6 w-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+             class="absolute inset-0 transition-all duration-300"
+             [class.opacity-0]="isOpen()"
+             [class.rotate-90]="isOpen()">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+             class="absolute inset-0 transition-all duration-300"
+             [class.opacity-0]="!isOpen()"
+             [class.-rotate-90]="!isOpen()">
+            <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+    </div>
+
+    <!-- Tooltip implícito (Pulse effect) -->
+    @if (!isOpen()) {
+        <span class="absolute -top-1 -right-1 flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+        </span>
+    }
+</button>
