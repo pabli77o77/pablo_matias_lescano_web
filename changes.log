@@ -1,5 +1,12 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:33] - Social Buttons Ghost UI & Security
+- **Contact Widget Polish**:
+  - Implementación de estilo "Ghost-to-Solid" para botones de redes sociales (LinkedIn Blue / WhatsApp Green).
+  - Configuración de navegación segura (`noopener noreferrer`) mediante `navigateTo(url)`.
+  - Definición de constantes estrictas para URLs de contacto.
+  - Mejora de accesibilidad (A11y) con atributos `aria-label` dinámicos basados en i18n.
+
 ## [2026-02-02 16:29] - Footer Badges Premium Refactor
 - **UI/UX Polish (Stripe/Linear Style)**:
   - Transformación de badges estáticos a botones interactivos con semántica HTML5.

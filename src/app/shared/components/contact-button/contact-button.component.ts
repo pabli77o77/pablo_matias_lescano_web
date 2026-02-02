@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ContactService } from '@core/services/contact.service';
 import { ProfileStore } from '@core/store/profile.store';
 
+const SOCIAL_LINKS = {
+  LINKEDIN: 'https://www.linkedin.com/in/pablo-matias-lescano/',
+  WHATSAPP: 'https://wa.me/5491160003204?text=Hola%20Pablo,%20vi%20tu%20portfolio%20y%20me%20gustaría%20consultarte%20por%20un%20proyecto.'
+} as const;
+
 const I18N_TEXT = {
   es: {
     title: 'Conectemos',
@@ -18,7 +23,9 @@ const I18N_TEXT = {
     backToSite: 'Volver al sitio',
     error: 'Error de conexión. Por favor intenta más tarde.',
     linkedin: 'LinkedIn',
-    whatsapp: 'WhatsApp'
+    linkedinAria: 'Ver perfil de LinkedIn de Pablo Lescano',
+    whatsapp: 'WhatsApp',
+    whatsappAria: 'Contactar a Pablo Lescano por WhatsApp'
   },
   en: {
     title: 'Let\'s Connect',
@@ -34,7 +41,9 @@ const I18N_TEXT = {
     backToSite: 'Back to site',
     error: 'Connection error. Please try again later.',
     linkedin: 'LinkedIn',
-    whatsapp: 'WhatsApp'
+    linkedinAria: 'View Pablo Lescano\'s LinkedIn Profile',
+    whatsapp: 'WhatsApp',
+    whatsappAria: 'Contact Pablo Lescano via WhatsApp'
   }
 };
 
@@ -48,6 +57,9 @@ const I18N_TEXT = {
 export class ContactButtonComponent {
   private contactService = inject(ContactService);
   private store = inject(ProfileStore);
+  
+  // Expose links to template
+  readonly links = SOCIAL_LINKS;
   
   // UI State Signals
   isOpen = signal(false);
@@ -138,8 +150,9 @@ export class ContactButtonComponent {
     });
   }
 
-  openSocial(url: string) {
-    window.open(url, '_blank');
+  navigateTo(url: string) {
+    // Security: noopener noreferrer prevents tabnabbing and referencing
+    window.open(url, '_blank', 'noopener noreferrer');
   }
 
   updateSignal(sig: any, event: Event) {
