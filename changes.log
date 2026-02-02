@@ -1,5 +1,11 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 14:13] - Fix Critical CV Download Path
+- **Assets Serving Fix**:
+  - Cambio de ruta relativa (`docs/cv...`) a ruta absoluta (`/docs/cv...`) en `ProfileComponent`.
+  - Solución al bug "Archivo Corrupto" causado por el enrutador de Angular resolviendo assets estáticos relativos contra sub-rutas dinámicas (evitando el fallback a `index.html`).
+  - Eliminación de parámetro `timestamp` query string para asegurar compatibilidad total con servidores estáticos.
+
 ## [2026-01-31] - Premium Footer & Dynamic Architecture System
 - **Footer "Command Center" UI**:
   - Rediseño completo a layout horizontal de eje único con padding extendido (`py-10`).
