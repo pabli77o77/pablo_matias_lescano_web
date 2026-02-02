@@ -1,11 +1,11 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
-## [2026-02-02 18:55] - Robust Programmatic PDF Download
-- **Engineering Fix**:
-  - Reemplazo de enlaces estáticos por **descarga programática vía HttpClient (Blob)**.
-  - Prevención definitiva de archivos corruptos (HTML servido como PDF) mediante validación de flujo binario.
-  - Manejo de errores explícito (Console/Alert) en caso de fallo en la red o ruta inexistente.
-  - Refactor de UI: Conversión de enlace `<a>` a `<button>` semántico en `ProfileComponent`.
+## [2026-02-02 19:02] - Antivirus-Compatible PDF Open
+- **Compatibility Fix**:
+  - Reemplazo de lógica de descarga `Blob` por `window.open(url, '_blank')`.
+  - Solución al bloqueo de "McAfee WebAdvisor" (y otros AV) que interceptan descargas de blobs programáticos.
+  - Delegación de la renderización al visor PDF nativo del navegador (Chrome/Edge Viewer) para máxima fiabilidad.
+  - Uso de rutas absolutas (`/docs/...`) para evitar intercepción del enrutador Angular.
 
 ## [2026-02-02 16:43] - Hero Bio Technical Polish
 - **Content Update**:

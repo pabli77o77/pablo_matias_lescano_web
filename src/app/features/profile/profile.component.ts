@@ -2,7 +2,6 @@ import { Component, inject, effect, computed } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ProfileStore } from '@core/store/profile.store';
 import { AnalyticsService } from '@core/services/analytics.service';
-import { ProfileService } from '@core/services/profile.service'; // Importar Service
 import { JsonPipe } from '@angular/common';
 import { ExperienceTimelineComponent } from './components/experience-timeline/experience-timeline.component';
 import { TechStackComponent } from './components/tech-stack/tech-stack.component';
@@ -19,7 +18,6 @@ export class ProfileComponent {
   readonly store = inject(ProfileStore);
   private titleService = inject(Title);
   private analytics = inject(AnalyticsService);
-  private profileService = inject(ProfileService); // Inyectar Service
 
   // Nombre limpio para el archivo descargado
   cvFileName = computed(() => {
@@ -29,12 +27,13 @@ export class ProfileComponent {
   });
 
   // URL del CV dinámica basada en el idioma actual
-  // IMPORTANTE: Ruta relativa a la raíz 'public' servida por Angular
+  // Usamos rutas absolutas ('/docs/...') para asegurar que el servidor estático responda
+  // y evitar que el Router de Angular intercepte la navegación.
   cvUrl = computed(() => {
     const lang = this.store.language();
     return lang === 'en' 
-      ? 'docs/cv_pablo_lescano_en.pdf' // Sin barra inicial para HttpClient
-      : 'docs/cv_pablo_lescano.pdf';
+      ? '/docs/cv_pablo_lescano_en.pdf'
+      : '/docs/cv_pablo_lescano.pdf';
   });
 
   constructor() {
@@ -64,22 +63,10 @@ export class ProfileComponent {
     // Tracking
     this.analytics.trackCvDownload(fileName, lang);
 
-    // Descarga Programática Robusta
-    this.profileService.downloadFile(url).subscribe({
-      next: (blob) => {
-        // Crear un objeto URL para el blob
-        const a = document.createElement('a');
-        const objectUrl = URL.createObjectURL(blob);
-        a.href = objectUrl;
-        a.download = fileName;
-        a.click();
-        URL.revokeObjectURL(objectUrl);
-      },
-      error: (err) => {
-        console.error('Error crítico descargando CV:', err);
-        alert('Lo siento, hubo un problema técnico descargando el PDF. Por favor intenta más tarde.');
-      }
-    });
+    // ESTRATEGIA: Abrir en nueva pestaña (Visor Nativo)
+    // Esto evita bloqueos de antivirus (McAfee) y problemas de Blob.
+    // El usuario puede guardar el archivo desde el visor del navegador.
+    window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   // Método auxiliar para el template si se quisiera trackear clicks sociales explícitos
