@@ -1,5 +1,27 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 15:32] - AWS Lambda Contact Form Integration
+- **Contact System Backend**:
+  - Implementación de `ContactService` para comunicación con AWS API Gateway (`execute-api.us-east-1`).
+  - Lógica de manejo de estados de carga (`isLoading` Signal) y finalización con RxJS `finalize`.
+- **Contact Widget UI Updates**:
+  - Conexión del formulario reactivo con el servicio real.
+  - Implementación de feedback visual:
+    - **Loading**: Deshabilitación de controles y Spinner de carga en el botón.
+    - **Success**: Reemplazo del formulario con mensaje de confirmación animado (`fade-in slide-in`).
+    - **Error**: Alerta visual contextual para reintentar.
+
+## [2026-02-02 15:07] - Contact Widget Implementation
+- **Shared Component**:
+  - Creación de `ContactButtonComponent` (FAB) fijo en esquina inferior derecha.
+  - Implementación de **Interactive Contact Modal** con Glassmorphism (`backdrop-blur-xl`, `bg-slate-900/95`).
+  - Lógica reactiva con **Angular Signals** (`isOpen`, `isHovered`) para transiciones fluidas.
+  - Formulario de contacto integrado con `ReactiveFormsModule` y validaciones.
+  - Accesos directos a LinkedIn y WhatsApp con estilo consistente (Dark Mode/Premium).
+  - Efectos visuales de "Pulse" para notificaciones y animaciones de rotación en ícono.
+- **Layout Integration**:
+  - Inyección global en `MainLayoutComponent` (`z-50` layer) para disponibilidad en toda la app.
+
 ## [2026-02-02 14:13] - Fix Critical CV Download Path
 - **Assets Serving Fix**:
   - Cambio de ruta relativa (`docs/cv...`) a ruta absoluta (`/docs/cv...`) en `ProfileComponent`.
