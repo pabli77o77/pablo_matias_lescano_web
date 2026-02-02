@@ -1,5 +1,15 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:38] - Strategic Hero Bio Refactor
+- **Authority Branding**:
+  - Rediseño de la jerarquía de títulos: Software Architect & Tech Lead como encabezado principal.
+  - Implementación de copy estratégico enfocado en impacto de negocio (+11 años, arquitecturas empresariales).
+- **UI/UX Polish**:
+  - Contraste selectivo: `white` para títulos, `slate-400` para cuerpo de texto.
+  - Enfoque visual (Highlights): Aplicación de `sky-400` en términos técnicos críticos (AWS, DDD, CQRS, Signals).
+  - Optimización de legibilidad: Limitación de `max-width` a 700px y aumento de `line-height`.
+  - Motion: Animaciones escalonadas `fade-in slide-in` para mejorar la percepción de carga.
+
 ## [2026-02-02 16:33] - Social Buttons Ghost UI & Security
 - **Contact Widget Polish**:
   - Implementación de estilo "Ghost-to-Solid" para botones de redes sociales (LinkedIn Blue / WhatsApp Green).
