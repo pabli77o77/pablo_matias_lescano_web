@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <!-- Form -->
+        <!-- Form (Zero Friction Layout) -->
         @if (submitStatus() === 'success') {
             <div class="flex flex-col items-center justify-center py-8 text-center space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
                 <div class="h-12 w-12 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center border border-green-500/50">
@@ -54,46 +54,56 @@
                 </div>
             </div>
         } @else {
-            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-4">
+            <div class="space-y-4">
                 <div class="space-y-1">
-                    <input formControlName="name" type="text" placeholder="Name" 
+                    <input [value]="name()" (input)="updateSignal(name, $event)" 
+                           type="text" placeholder="Name" 
                            [class.opacity-50]="isLoading()"
-                           class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all">
+                           class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all">
                 </div>
                 <div class="space-y-1">
-                    <input formControlName="email" type="email" placeholder="Email" 
+                    <input [value]="email()" (input)="updateSignal(email, $event)"
+                           type="email" placeholder="email@example.com" 
                            [class.opacity-50]="isLoading()"
-                           class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all">
+                           class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all">
                 </div>
                 <div class="space-y-1">
-                    <textarea formControlName="message" rows="3" placeholder="How can I help you?" 
+                    <textarea [value]="message()" (input)="updateSignal(message, $event)"
+                              rows="3" placeholder="How can I help you?" 
                               [class.opacity-50]="isLoading()"
-                              class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all resize-none"></textarea>
+                              class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all resize-none"></textarea>
                 </div>
 
                 @if (submitStatus() === 'error') {
                     <div class="p-2 rounded bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">
-                        Something went wrong. Please try again or use LinkedIn.
+                        Connection error. Please try again later.
                     </div>
                 }
 
-                <button type="submit" 
-                        [disabled]="contactForm.invalid || isLoading()"
-                        class="w-full group relative overflow-hidden rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-lg shadow-blue-500/25 hover:bg-blue-500 hover:shadow-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
-                    <span class="relative z-10 flex items-center justify-center gap-2">
-                        @if (isLoading()) {
-                            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Sending...
-                        } @else {
-                            Send Message
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                        }
-                    </span>
+                <button (click)="sendContact()"
+                        [disabled]="!isFormValid() || isLoading()"
+                        class="w-full py-2.5 rounded-lg font-medium text-sm transition-all duration-300 flex justify-center items-center shadow-lg group relative overflow-hidden"
+                        [ngClass]="{
+                          'bg-cyan-600 text-white hover:bg-cyan-500 shadow-cyan-900/20 hover:shadow-cyan-500/40': isFormValid() && !isLoading(),
+                          'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700': !isFormValid() || isLoading()
+                        }">
+                    
+                    @if (isLoading()) {
+                        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    } @else {
+                        <span>Send Message</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                             class="ml-2 transition-transform duration-300"
+                             [class.translate-x-1]="isFormValid() && !isLoading()"
+                             [class.opacity-0]="!isFormValid()">
+                             <line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    }
                 </button>
-            </form>
+            </div>
         }
     </div>
 </div>

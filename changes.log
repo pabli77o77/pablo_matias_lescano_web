@@ -1,5 +1,14 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:11] - Zero Friction Contact UX Refactor
+- **UX Optimization**:
+  - Implementación de patrón "Zero Friction" eliminando `ReactiveFormsModule` a favor de **Angular Signals** puros.
+  - Validación en tiempo real (`computed signal`) para habilitación instantánea del botón de envío.
+  - **Visual Feedback**:
+    - Cambio de paleta de botón: De Blue estándar a **Cyan/Active** para indicar estado "Listo".
+    - Estados visuales claros: Disabled (Slate/Borde) vs Active (Cyan/Shadow).
+    - Eliminación de validaciones ruidosas en inputs; el botón es el único indicador de estado.
+
 ## [2026-02-02 15:32] - AWS Lambda Contact Form Integration
 - **Contact System Backend**:
   - Implementación de `ContactService` para comunicación con AWS API Gateway (`execute-api.us-east-1`).
