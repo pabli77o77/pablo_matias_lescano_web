@@ -1,5 +1,9 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:43] - Hero Bio Technical Polish
+- **Content Update**:
+  - Ajuste en la referencia técnica de Angular para una mayor perennidad del perfil ("Angular 18" -> "Angular").
+
 ## [2026-02-02 16:38] - Strategic Hero Bio Refactor
 - **Authority Branding**:
   - Rediseño de la jerarquía de títulos: Software Architect & Tech Lead como encabezado principal.
