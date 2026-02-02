@@ -1,6 +1,40 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '@core/services/contact.service';
+import { ProfileStore } from '@core/store/profile.store';
+
+const I18N_TEXT = {
+  es: {
+    title: 'Conectemos',
+    subtitle: 'Disponible para nuevos desafíos',
+    orMessage: 'O envía un mensaje',
+    placeholderName: 'Nombre',
+    placeholderEmail: 'email@ejemplo.com',
+    placeholderMessage: '¿Cómo puedo ayudarte?',
+    sendButton: 'Enviar Mensaje',
+    sending: 'Enviando...',
+    successTitle: '¡Mensaje Enviado!',
+    successSubtitle: 'Te responderé a la brevedad.',
+    error: 'Error de conexión. Por favor intenta más tarde.',
+    linkedin: 'LinkedIn',
+    whatsapp: 'WhatsApp'
+  },
+  en: {
+    title: 'Let\'s Connect',
+    subtitle: 'Available for new challenges',
+    orMessage: 'Or send a message',
+    placeholderName: 'Name',
+    placeholderEmail: 'email@example.com',
+    placeholderMessage: 'How can I help you?',
+    sendButton: 'Send Message',
+    sending: 'Sending...',
+    successTitle: 'Message Sent!',
+    successSubtitle: 'I\'ll get back to you soon.',
+    error: 'Connection error. Please try again later.',
+    linkedin: 'LinkedIn',
+    whatsapp: 'WhatsApp'
+  }
+};
 
 @Component({
   selector: 'app-contact-button',
@@ -11,11 +45,18 @@ import { ContactService } from '@core/services/contact.service';
 })
 export class ContactButtonComponent {
   private contactService = inject(ContactService);
+  private store = inject(ProfileStore);
   
   // UI State Signals
   isOpen = signal(false);
   isHovered = signal(false);
   submitStatus = signal<'idle' | 'success' | 'error'>('idle');
+
+  // I18n Computed Signal
+  uiText = computed(() => {
+    const lang = this.store.language();
+    return I18N_TEXT[lang] || I18N_TEXT.en;
+  });
 
   // Form Data Signals (Pattern: Zero Friction)
   name = signal('');

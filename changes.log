@@ -1,5 +1,12 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:14] - Dynamic i18n for Contact Widget
+- **Internationalization (i18n)**:
+  - Implementación de sistema de traducción local (`I18N_TEXT`) en `ContactButtonComponent`.
+  - Inyección de `ProfileStore` para sincronización reactiva con el idioma global de la aplicación.
+  - Traducción completa de UI: Títulos, placeholders, botones, mensajes de éxito/error y tooltips.
+  - Soporte nativo para ES/EN sin necesidad de recargar la página.
+
 ## [2026-02-02 16:11] - Zero Friction Contact UX Refactor
 - **UX Optimization**:
   - Implementación de patrón "Zero Friction" eliminando `ReactiveFormsModule` a favor de **Angular Signals** puros.
