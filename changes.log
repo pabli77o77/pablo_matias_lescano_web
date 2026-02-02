@@ -1,5 +1,12 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-02 16:29] - Footer Badges Premium Refactor
+- **UI/UX Polish (Stripe/Linear Style)**:
+  - Transformación de badges estáticos a botones interactivos con semántica HTML5.
+  - Implementación de patrón **Reveal Interaction**: Flecha indicadora que se desliza (`w-0` a `w-3`) al hacer hover.
+  - Efectos hápticos visuales: Zoom suave (`scale-105`), sombras tintadas (`shadow-cyan/emerald/blue`) y bordes iluminados.
+  - Iconografía dinámica: Transición de gris apagado a colores vibrantes al interactuar.
+
 ## [2026-02-02 16:17] - Premium 'Completion Glow' Success State
 - **UX Emotional Design**:
   - Implementación de la vista de éxito "Completion Glow" con narrativa de infraestructura serverless.
