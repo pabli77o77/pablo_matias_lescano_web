@@ -1,6 +1,7 @@
-import { Component, Input, computed, signal } from '@angular/core';
+import { Component, Input, computed, signal, inject } from '@angular/core';
 import { JsonPipe, UpperCasePipe } from '@angular/common';
 import { CODE_SNIPPETS } from '@core/constants/code-snippets';
+import { ProfileStore } from '@core/store/profile.store';
 
 @Component({
   selector: 'app-data-view',
@@ -10,6 +11,7 @@ import { CODE_SNIPPETS } from '@core/constants/code-snippets';
   styleUrl: './data-view.component.scss'
 })
 export class DataViewComponent {
+  private store = inject(ProfileStore);
   @Input({ required: true }) data: any;
 
   snippets = CODE_SNIPPETS;
@@ -24,12 +26,28 @@ export class DataViewComponent {
     return JSON.stringify(this.data, null, 2);
   });
 
-  // Mapa de notas de arquitectura
-  private architectNotes: Record<string, string> = {
-    'rxjs': 'La implementación utiliza RxJS Pipeable Operators para procesar streams de datos pesados. Se optó por un enfoque reactivo para garantizar que la interfaz mantenga los 60fps mientras se filtran y transforman +6.8M de registros en tiempo real, evitando el bloqueo del Event Loop.',
-    'medallion': 'Este script implementa la transición de Bronze a Silver en una arquitectura Medallion. La lógica de de-duplicación y validación de esquemas está diseñada para ser idempotente, permitiendo re-ejecuciones sin corrupción de datos, reduciendo los costos de computación en AWS en un 40%.',
-    'store': 'Migración estratégica a Signals para optimizar la detección de cambios. Al eliminar la dependencia de Zone.js en componentes críticos, logramos una reducción del 30% en el tiempo de renderizado inicial y una gestión de estado más predecible y granular.'
-  };
+  // Selector de idioma reactivo
+  currentLang = this.store.language;
+
+  jsonProfileDescription = computed(() => {
+    return this.currentLang() === 'es' 
+      ? 'Data Schema: Estructura de dominio extensible que sirve como fuente de verdad única para la renderización dinámica de toda la plataforma.'
+      : 'Data Schema: Extensible domain structure serving as the single source of truth for the dynamic rendering of the entire platform.';
+  });
+
+  // Textos de UI Localizados
+  ui = computed(() => {
+    const lang = this.currentLang();
+    return lang === 'es' ? {
+      copy: 'Copiar Concepto',
+      copied: 'Copiado',
+      noteLabel: 'Nota de Arquitecto'
+    } : {
+      copy: 'Copy Concept',
+      copied: 'Copied',
+      noteLabel: 'Architect Note'
+    };
+  });
 
   toggleSection(id: string) {
     if (this.expandedSection() === id) {
@@ -39,8 +57,9 @@ export class DataViewComponent {
     }
   }
 
-  getNote(id: string): string | null {
-    return this.architectNotes[id] || null;
+  // Método helper para obtener la descripción traducida
+  getDescription(snippet: any): string {
+    return snippet.description[this.currentLang()] || snippet.description.en;
   }
 
   copyConcept(text: string) {

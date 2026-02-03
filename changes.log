@@ -1,5 +1,23 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-03 14:15] - Enterprise Analytics & Content Alignment
+- **GTM & Analytics**:
+  - Implementación de `googleTagManagerId` en configuración global.
+  - Refactor de `AnalyticsService` con patrón de resiliencia "Fail-Safe" para AdBlockers (ERR_BLOCKED_BY_CLIENT).
+  - Telemetría granular para Badges del Footer (`view_tech_badge`).
+  - Detección corregida de WhatsApp (`wa.me`) para tracking de conversiones.
+- **Content Strategy (Tech Lead Profile)**:
+  - Actualización de experiencia: Caso SunExpress/Flyr y Newshore.
+  - Refinamiento de logro "Performance Architecture": +6.8M registros, 95% optimización (Meta & Google Data).
+  - Corrección de cálculo de años de experiencia (+9 años dinámicos desde 2016).
+  - Elevación de tono en `Code Snippets`: Descripciones bilingües de alto nivel (Arquitectura de Estado, Resiliencia, Data Schema).
+  - Nuevo snippet SQL: `postgresql_performance_tuning.sql` con estrategias de indexación avanzada.
+- **UI/UX Polish**:
+  - Nuevo Badge Footer: "Analytics & GTM Strategy" con layout CSS Grid responsivo.
+  - Modal "Architect Note" bilingüe en la vista de datos (JSON).
+  - Placeholders inspiracionales en formulario de contacto ("Desafío técnico...").
+  - Accesibilidad (A11Y): Atributos `aria-label` dinámicos.
+
 ## [2026-02-02 19:07] - Footer Modals i18n Fix
 - **Internationalization**:
   - Refactor de `FOOTER_DATA` estático a estructura localizada (`es`/`en`).

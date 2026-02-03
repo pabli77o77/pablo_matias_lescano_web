@@ -14,6 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
+    // Analytics & GTM Configuration
+    { provide: 'googleTagManagerId', useValue: 'GTM-TFNBRMFK' },
     // Analytics Service Eager Loading
     {
       provide: APP_INITIALIZER,

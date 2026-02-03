@@ -66,6 +66,7 @@
                     <div class="space-y-1">
                         <textarea [value]="message()" (input)="updateSignal(message, $event)"
                                   rows="3" [placeholder]="uiText().placeholderMessage" 
+                                  aria-label="Escribe tu mensaje o desafío técnico"
                                   [class.opacity-50]="isLoading()"
                                   class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all resize-none"></textarea>
                     </div>

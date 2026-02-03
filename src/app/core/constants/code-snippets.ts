@@ -2,16 +2,19 @@ export interface CodeSnippet {
   id: string;
   title: string;
   language: string;
-  description: string;
+  description: { es: string; en: string };
   code: string;
 }
 
 export const CODE_SNIPPETS: CodeSnippet[] = [
   {
     id: 'store',
-    title: 'profile.store.ts (Reactive State Management)',
+    title: 'profile.store.ts (Angular 18 Signals)',
     language: 'typescript',
-    description: 'Implementación real del Store de esta aplicación usando Angular Signals. Maneja estado de carga, errores, persistencia de idioma y lógica de vista dual.',
+    description: {
+      es: 'Arquitectura de Estado Reactivo: Gestión centralizada con Angular 18 Signals, optimizando la detección de cambios y reduciendo el overhead de memoria en la SPA.',
+      en: 'Reactive State Architecture: Centralized management with Angular 18 Signals, optimizing change detection and reducing memory overhead in the SPA.'
+    },
     code: `/* 
  * Real Source Code from this Application 
  * Location: src/app/core/store/profile.store.ts
@@ -19,112 +22,86 @@ export const CODE_SNIPPETS: CodeSnippet[] = [
 
 @Injectable({ providedIn: 'root' })
 export class ProfileStore {
-  private profileService = inject(ProfileService);
-  private state = signal<ProfileState>(initialState);
+  // Fine-grained reactivity
+  private _data = signal<UserProfileViewModel | null>(null);
+  private _viewMode = signal<ViewMode>('frontend');
+  private _language = signal<LanguageCode>('es');
 
   // Computed Selectors (Memoized)
-  readonly data = computed(() => this.state().data);
-  readonly isLoading = computed(() => this.state().isLoading);
-  readonly viewMode = computed(() => this.state().viewMode);
-  readonly ui = computed<UiLabels>(() => UI_LABELS[this.state().language]);
-
+  readonly ui = computed<UiLabels>(() => UI_LABELS[this._language()]);
+  
+  // Effect: Side-effects isolation
   constructor() {
-    this.loadProfile();
+    effect(() => {
+      localStorage.setItem('preferred_language', this._language());
+    });
   }
 
-  setLanguage(lang: Language) {
-    if (this.state().language === lang) return;
-    try {
-      localStorage.setItem('preferred_language', lang);
-    } catch { }
-    this.state.update(s => ({ ...s, language: lang }));
-    this.loadProfile();
+  toggleViewMode() {
+    // Immutable update
+    this._viewMode.update(mode => mode === 'frontend' ? 'data' : 'frontend');
   }
 }`
   },
   {
-    id: 'medallion',
-    title: 'medallion-pipeline.py (Cloud & Data)',
-    language: 'python',
-    description: 'Pipeline de datos en AWS Lambda para procesar ingesta raw a capas refinadas.',
-    code: `def process_bronze_to_silver(event, context):
-    """
-    Transición Bronze -> Silver: De-duplicación y validación de esquema.
-    Arquitectura idempotente para re-proceso seguro.
-    """
-    try:
-        s3_bucket = event['Records'][0]['s3']['bucket']['name']
-        s3_key = event['Records'][0]['s3']['object']['key']
-        
-        # Lectura eficiente con Pandas (Chunking para bajo consumo de RAM)
-        df_raw = read_s3_csv(s3_bucket, s3_key)
-        
-        # Lógica de Negocio: Limpieza y Estandarización
-        df_clean = df_raw.drop_duplicates(subset=['transaction_id'])
-        df_clean['processed_at'] = datetime.utcnow()
-        
-        # Escritura en capa Silver (Parquet/Snappy para optimizar consultas en Athena)
-        write_to_silver(df_clean, partition_cols=['date'])
-        
-        return { 'status': 200, 'rows_processed': len(df_clean) }
-        
-    except Exception as e:
-        log_error(f"Pipeline Failed: {str(e)}")
-        raise e  # Trigger Dead Letter Queue (DLQ)`
-  },
-  {
-    id: 'rxjs',
-    title: 'analytics.service.ts (RxJS Streams)',
+    id: 'resilience',
+    title: 'analytics.service.ts (Resilience Pattern)',
     language: 'typescript',
-    description: 'Uso estratégico de RxJS para el manejo de flujos de eventos asíncronos (Router). Mientras Signals gestiona el estado de la UI, RxJS sigue siendo el rey para filtrar y suscribirse a eventos del sistema.',
+    description: {
+      es: 'Resilience Pattern: Implementación de telemetría desacoplada que previene fallos críticos (undefined) ante el bloqueo de scripts de terceros por AdBlockers.',
+      en: 'Resilience Pattern: Decoupled telemetry implementation that prevents critical failures (undefined) when third-party scripts are blocked by AdBlockers.'
+    },
     code: `/* 
  * Real Source Code from this Application 
  * Location: src/app/core/services/analytics.service.ts
  */
 
-private trackPageViews() {
-  // RxJS Pipeable Operators para filtrar el flujo de navegación
-  this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd)
-  ).subscribe((event: any) => {
-    
-    // Integración con Google Analytics
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'page_view', {
-        page_path: event.urlAfterRedirects
-      });
-    }
-  });
+private pushEvent(data: AnalyticsEvent) {
+  // 1. Defense in Depth: Verify Global Objects
+  const dataLayerExists = (window as any).dataLayer;
+
+  try {
+    // 2. Async Error Handling (Network/Blockers)
+    this.gtmService.pushTag(data).catch(err => {
+      if (isDevMode()) console.warn('GTM Network Error:', err);
+    });
+  } catch (err) {
+    // 3. Sync Error Handling (Runtime Checks)
+    // Silent degradation: User flow remains 100% functional
+    if (isDevMode()) console.warn('GTM Blocked by Client:', err);
+  }
 }`
   },
   {
-    id: 'mapper',
-    title: 'profile.mapper.ts (Domain Logic)',
-    language: 'typescript',
-    description: 'Lógica pura de transformación de datos. Calcula la antigüedad total basándose en el inicio de carrera y formatea duraciones (ej. "3 años, 2 meses") sin ensuciar la vista.',
+    id: 'data-arch',
+    title: 'postgresql_performance_tuning.sql (DB Optimization)',
+    language: 'sql',
+    description: {
+      es: 'PostgreSQL Performance: Optimización crítica de una infraestructura de datos con <span class="text-emerald-400 font-bold">+6.8M</span> de registros provenientes de APIs de Meta y Google. Implementé una estrategia de indexación avanzada (Partial & Composite B-Tree) y orquestación de Vistas Materializadas. El resultado fue la reducción drástica de la latencia de <span class="text-cyan-400 font-bold">60s</span> a <span class="text-emerald-400 font-bold">&lt;3s</span> (<span class="text-emerald-400 font-bold">95%</span> de mejora), eliminando cuellos de botella en la capa de visualización y evitando el escalado vertical de hardware.',
+      en: 'PostgreSQL Performance: Critical optimization of data infrastructure handling <span class="text-emerald-400 font-bold">+6.8M</span> records from Meta and Google APIs. Implemented advanced indexing strategy (Partial & Composite B-Tree) and Materialized View orchestration. Resulted in drastic latency reduction from <span class="text-cyan-400 font-bold">60s</span> to <span class="text-emerald-400 font-bold">&lt;3s</span> (<span class="text-emerald-400 font-bold">95%</span> improvement), eliminating bottlenecks in the visualization layer and preventing vertical hardware scaling.'
+    },
     code: `/* 
- * Real Source Code from this Application 
- * Location: src/app/domain/mappers/profile.mapper.ts
+ * ESTRATEGIA DE OPTIMIZACIÓN: REDUCCIÓN DE LATENCIA DEL 95%
+ * Volumen: +6.8M registros | Origen: Google Search Console & Meta Ads
+ * Objetivo: Eliminar Full Table Scans y optimizar agregaciones para Superset.
  */
 
-export class ProfileMapper {
-  static mapToViewModel(raw: UserProfile): UserProfileViewModel {
-    return {
-      ...raw,
-      experience: raw.experience.map(exp => this.mapExperience(exp)),
-      totalExperienceYears: this.calculateTotalYears(raw)
-    };
-  }
+-- 1. Creación de Índice Compuesto para consultas de rango y filtrado por query
+-- Uso de CONCURRENTLY para evitar bloqueo de escritura en Producción (Zero Downtime)
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_gsc_perf_query_fecha 
+ON marketing.gsc_query_performance(query, fecha DESC);
 
-  private static calculateTotalYears(profile: UserProfile): number {
-    // Prioridad: Fecha de inicio de carrera explícita
-    if (profile.personal_info.career_start) {
-      const start = new Date(profile.personal_info.career_start).getTime();
-      const diff = Date.now() - start;
-      return Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-    }
-    return 0; // Fallback
-  }
-}`
+-- 2. Índice Parcial para segmentación de Keywords de marca (High Cardinality)
+-- Filtra solo el subset crítico, reduciendo el tamaño del índice en un 80%
+CREATE INDEX IF NOT EXISTS idx_info_seo_brand 
+ON marketing.info_seo_marketing(is_brand_keyword, fecha DESC) 
+WHERE is_brand_keyword = true;
+
+-- 3. Ejemplo de Vista Materializada para pre-agregación de métricas diarias
+-- Transforma agregaciones costosas en tiempo de ejecución (O(N)) a lecturas O(1)
+CREATE MATERIALIZED VIEW IF NOT EXISTS marketing.daily_seo_summary AS
+SELECT fecha, count(distinct query) as unique_queries, sum(clicks) as total_clicks
+FROM marketing.gsc_query_performance
+GROUP BY fecha;`
   }
 ];
