@@ -1,9 +1,10 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ProfileStore } from '@core/store/profile.store';
+import { AnalyticsService } from '@core/services/analytics.service';
 import { ArchitectureModalComponent } from '@shared/components/architecture-modal/architecture-modal.component';
 import { FooterDetail } from './footer.model';
 
-type ModalType = 'aws' | 'security' | 'mozilla';
+type ModalType = 'aws' | 'security' | 'mozilla' | 'analytics';
 
 const FOOTER_DATA_I18N: Record<'es' | 'en', Record<ModalType, FooterDetail>> = {
   es: {
@@ -38,6 +39,17 @@ const FOOTER_DATA_I18N: Record<'es' | 'en', Record<ModalType, FooterDetail>> = {
         { label: 'Puntaje Observatory', value: 'B+ (Top 5%)' },
         { label: 'Estrategia SPA', value: 'Angular Signals + Lazy Loading' },
         { label: 'Rendimiento Lighthouse', value: '100 / 100' }
+      ]
+    },
+    analytics: {
+      title: 'Enterprise Analytics Architecture',
+      subtitle: 'Caso de Éxito: SunExpress (Newshore/Flyr)',
+      icon: '📊',
+      description: 'Implementación de soluciones de tracking de alta precisión. Diseño de DataLayers agnósticos para flujos de reserva complejos y orquestación de funnels de conversión avanzados.',
+      features: [
+        { label: 'Estrategia', value: 'Custom DataLayer Design' },
+        { label: 'Tracking', value: 'GA4 + GTM Governance' },
+        { label: 'Impacto', value: 'Data-Driven CRO' }
       ]
     }
   },
@@ -74,6 +86,17 @@ const FOOTER_DATA_I18N: Record<'es' | 'en', Record<ModalType, FooterDetail>> = {
         { label: 'SPA Strategy', value: 'Angular Signals + Lazy Loading' },
         { label: 'Lighthouse Perf.', value: '100 / 100' }
       ]
+    },
+    analytics: {
+      title: 'Enterprise Analytics Architecture',
+      subtitle: 'Success Case: SunExpress (Newshore/Flyr)',
+      icon: '📊',
+      description: 'Implementation of high-precision tracking solutions. Design of agnostic DataLayers for complex booking flows and orchestration of advanced conversion funnels.',
+      features: [
+        { label: 'Strategy', value: 'Custom DataLayer Design' },
+        { label: 'Tracking', value: 'GA4 + GTM Governance' },
+        { label: 'Impact', value: 'Data-Driven CRO' }
+      ]
     }
   }
 };
@@ -87,6 +110,7 @@ const FOOTER_DATA_I18N: Record<'es' | 'en', Record<ModalType, FooterDetail>> = {
 })
 export class FooterComponent {
   store = inject(ProfileStore);
+  private analytics = inject(AnalyticsService);
   currentYear = new Date().getFullYear();
   
   // State Signal: Tracks WHICH modal type is open (or null)
@@ -104,13 +128,20 @@ export class FooterComponent {
 
   openModal(type: string) {
     // Validamos que sea un tipo conocido
-    if (['aws', 'security', 'mozilla'].includes(type)) {
+    if (['aws', 'security', 'mozilla', 'analytics'].includes(type)) {
       this.activeModalType.set(type as ModalType);
+      
+      // Telemetría: Registrar interés en la tecnología específica
+      this.analytics.trackFooterInteraction(type);
     }
   }
 
   closeModal() {
     this.activeModalType.set(null);
+  }
+
+  trackLinkedIn() {
+    this.analytics.trackSocialInteraction('linkedin');
   }
 }
 

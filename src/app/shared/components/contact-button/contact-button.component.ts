@@ -1,6 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '@core/services/contact.service';
+import { AnalyticsService } from '@core/services/analytics.service';
 import { ProfileStore } from '@core/store/profile.store';
 
 const SOCIAL_LINKS = {
@@ -15,7 +16,7 @@ const I18N_TEXT = {
     orMessage: 'O envía un mensaje',
     placeholderName: 'Nombre',
     placeholderEmail: 'email@ejemplo.com',
-    placeholderMessage: '¿Cómo puedo ayudarte?',
+    placeholderMessage: 'Cuéntame sobre tu desafío técnico... (ej: Optimización de arquitectura, migración a AWS o desarrollo de una SPA de alto rendimiento)',
     sendButton: 'Enviar Mensaje',
     sending: 'Enviando...',
     successTitle: '¡Recibido!',
@@ -33,7 +34,7 @@ const I18N_TEXT = {
     orMessage: 'Or send a message',
     placeholderName: 'Name',
     placeholderEmail: 'email@example.com',
-    placeholderMessage: 'How can I help you?',
+    placeholderMessage: 'Tell me about your technical challenge... (e.g., architecture optimization, AWS migration, or high-performance SPA development)',
     sendButton: 'Send Message',
     sending: 'Sending...',
     successTitle: 'Received!',
@@ -56,6 +57,7 @@ const I18N_TEXT = {
 })
 export class ContactButtonComponent {
   private contactService = inject(ContactService);
+  private analyticsService = inject(AnalyticsService);
   private store = inject(ProfileStore);
   
   // Expose links to template
@@ -138,6 +140,10 @@ export class ContactButtonComponent {
     this.contactService.sendEmail(formData).subscribe({
       next: () => {
         this.submitStatus.set('success');
+        this.analyticsService.trackContactFormSuccess();
+        if (isDevMode()) {
+          console.log("Evento 'contact_form_success' enviado al DataLayer");
+        }
       },
       error: (err) => {
         console.error('[ContactAPI Error]:', {
@@ -151,7 +157,26 @@ export class ContactButtonComponent {
   }
 
   navigateTo(url: string) {
-    // Security: noopener noreferrer prevents tabnabbing and referencing
+    let platform = '';
+    
+    // 1. Detección de Plataforma (Fix: soporte para wa.me y whatsapp)
+    if (url.includes('whatsapp') || url.includes('wa.me')) {
+      platform = 'whatsapp';
+    } else if (url.includes('linkedin')) {
+      platform = 'linkedin';
+    }
+
+    // 2. Log de Consola (Debugging)
+    if (platform && isDevMode()) {
+      console.info(`Iniciando tracking para: ${platform}`);
+    }
+
+    // 3. Tracking (Antes de window.open para asegurar ejecución)
+    if (platform === 'whatsapp' || platform === 'linkedin') {
+       this.analyticsService.trackSocialInteraction(platform as 'whatsapp' | 'linkedin');
+    }
+
+    // 4. Navegación
     window.open(url, '_blank', 'noopener noreferrer');
   }
 

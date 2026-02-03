@@ -13,6 +13,31 @@
     
     @if (expandedSection() === 'json-profile') {
       <div class="window-body fade-in">
+        
+        <!-- ARCHITECT NOTE (JSON Schema) -->
+        <div class="architect-note-container">
+          <div class="note-header">
+            <div class="header-left">
+              <span class="note-icon">⚡</span>
+              <span>{{ ui().noteLabel }}</span>
+            </div>
+            <button (click)="copyConcept(jsonProfileDescription())" class="copy-concept-btn" [class.copied]="copyState() === 'copied'" title="Copiar razonamiento técnico">
+              <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                @if (copyState() === 'copied') {
+                  <path d="M5 13l4 4L19 7"></path>
+                } @else {
+                  <path d="M8 10a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-8z"></path>
+                  <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"></path>
+                }
+              </svg>
+              <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
+            </button>
+          </div>
+          <blockquote class="note-content">
+            "{{ jsonProfileDescription() }}"
+          </blockquote>
+        </div>
+
         <pre><code>{{ formattedData() }}</code></pre>
       </div>
     }
@@ -36,33 +61,29 @@
       @if (expandedSection() === snippet.id) {
         <div class="window-body fade-in">
           
-          <!-- ARCHITECT NOTE (New Feature) -->
-          @if (getNote(snippet.id); as note) {
-            <div class="architect-note-container">
-              <div class="note-header">
-                <div class="header-left">
-                  <span class="note-icon">⚡</span>
-                  <span>Architect Note</span>
-                </div>
-                <button (click)="copyConcept(note)" class="copy-concept-btn" [class.copied]="copyState() === 'copied'" title="Copiar razonamiento técnico">
-                  <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    @if (copyState() === 'copied') {
-                      <path d="M5 13l4 4L19 7"></path> <!-- Check Icon -->
-                    } @else {
-                      <path d="M8 10a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-8z"></path>
-                      <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"></path>
-                    }
-                  </svg>
-                  <span>{{ copyState() === 'copied' ? 'Copiado' : 'Copiar Concepto' }}</span>
-                </button>
+          <!-- ARCHITECT NOTE (Bilingual Tech Lead Insight) -->
+          <div class="architect-note-container">
+            <div class="note-header">
+              <div class="header-left">
+                <span class="note-icon">⚡</span>
+                <span>{{ ui().noteLabel }}</span>
               </div>
-              <blockquote class="note-content">
-                "{{ note }}"
-              </blockquote>
+              <button (click)="copyConcept(getDescription(snippet))" class="copy-concept-btn" [class.copied]="copyState() === 'copied'" title="Copiar razonamiento técnico">
+                <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  @if (copyState() === 'copied') {
+                    <path d="M5 13l4 4L19 7"></path> <!-- Check Icon -->
+                  } @else {
+                    <path d="M8 10a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-8z"></path>
+                    <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"></path>
+                  }
+                </svg>
+                <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
+              </button>
             </div>
-          }
+            <blockquote class="note-content" [innerHTML]="'&quot;' + getDescription(snippet) + '&quot;'">
+            </blockquote>
+          </div>
 
-          <div class="snippet-desc">// {{ snippet.description }}</div>
           <pre><code>{{ snippet.code }}</code></pre>
         </div>
       }

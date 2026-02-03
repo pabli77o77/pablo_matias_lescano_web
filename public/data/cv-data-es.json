@@ -6,9 +6,9 @@
     "email": "pablolescano87@protonmail.com",
     "phone": "+54 9 11 6000 3204",
     "linkedin": "linkedin.com/in/pablo-matias-lescano",
-    "career_start": "2014-03"
+    "career_start": "2016-12-01"
   },
-  "summary": "Ingeniero de Software Senior y Tech Lead con +{{years}} años de experiencia evolucionando arquitecturas empresariales hacia soluciones modernas de Cloud & Data en AWS. Experto en DDD, CQRS y arquitecturas Medallion.",
+  "summary": "Ingeniero de Software Senior y Tech Lead con +{{years}} años de experiencia evolucionando arquitecturas empresariales hacia soluciones modernas de Cloud & Data en AWS. Experiencia liderando arquitecturas de datos (Custom DataLayer) para clientes globales como SunExpress. Experto en DDD, CQRS y arquitecturas Medallion.",
   "experience": [
     {
       "company": "Stack Overflight",
@@ -20,7 +20,7 @@
       "metrics": [
         "Liderazgo técnico de un squad distribuido de 4 desarrolladores, estableciendo estándares de ingeniería (Code Reviews, GitFlow) que aceleraron la velocidad de entrega del equipo de Data.",
         "Arquitectura de Datos Cloud (AWS): Diseño e implementación de una solución Serverless (Lambda, EventBridge, S3) bajo patrón Medallion, orquestando la ingesta de +95 fuentes de datos críticas.",
-        "Ingeniería de Performance: Optimización masiva del 95% en tiempos de respuesta para reportes analíticos sobre volúmenes de +6.8M de registros mediante estrategias avanzadas de particionamiento y tuning en PostgreSQL."
+        "Arquitectura de Alto Rendimiento: Reducción del 95% en latencia de reportes críticos manejando +6.8M de registros (Meta & Google Ads). Implementación de estrategias eficientes de consulta para escalar la analítica de datos."
       ],
       "description": "Lideré el diseño de una plataforma de datos completa y el desarrollo de componentes críticos para motores de reserva (Plus Ultra, Jambojet)."
     },
