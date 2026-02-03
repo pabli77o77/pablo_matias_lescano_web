@@ -32,8 +32,8 @@ export class ProfileComponent {
   cvUrl = computed(() => {
     const lang = this.store.language();
     return lang === 'en' 
-      ? '/docs/cv_pablo_lescano_en.pdf'
-      : '/docs/cv_pablo_lescano.pdf';
+      ? '/assets/docs/cv_pablo_lescano_en.pdf'
+      : '/assets/docs/cv_pablo_lescano.pdf';
   });
 
   constructor() {
