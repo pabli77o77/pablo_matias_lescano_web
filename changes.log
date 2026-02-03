@@ -1,5 +1,11 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-03 14:35] - Fix CV Download Routing
+- **Bug Fix**:
+  - Reubicación de archivos PDF de `public/docs/` a `public/assets/docs/`.
+  - Actualización de rutas en `ProfileComponent` para apuntar a `/assets/docs/...`.
+  - Solución al problema donde la descarga del CV redirigía a la aplicación web (index.html) debido a conflictos de enrutamiento en la raíz.
+
 ## [2026-02-03 14:15] - Enterprise Analytics & Content Alignment
 - **GTM & Analytics**:
   - Implementación de `googleTagManagerId` en configuración global.
