@@ -1,0 +1,124 @@
+<section class="research-section animate-enter">
+  <!-- Header con Status Badge -->
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+    <div class="flex items-center gap-3">
+      <h2 class="text-2xl font-bold text-slate-100 m-0">R&D Labs</h2>
+      <span class="px-2 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-400 border border-slate-700">Experimental</span>
+    </div>
+    
+    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/50 shadow-lg backdrop-blur-sm">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+      </span>
+      <span class="text-xs font-semibold text-emerald-400 tracking-wide uppercase">Status: Live Testing / Beta Mode</span>
+    </div>
+  </div>
+
+  <!-- Grid de Proyectos -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+    
+    <!-- Connector Visual (Desktop: Absolute centered / Mobile: Hidden or adjusted via CSS if needed, but flex order handles layout) -->
+    <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 items-center justify-center w-8 h-8 rounded-full bg-slate-800 border border-slate-600 shadow-xl">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400">
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </div>
+
+    @for (project of projects; track project.id) {
+      <div class="group relative flex flex-col h-full bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+           [ngClass]="{
+             'hover:border-emerald-500/50 hover:shadow-emerald-500/10': project.theme === 'emerald',
+             'hover:border-cyan-500/50 hover:shadow-cyan-500/10': project.theme === 'cyan'
+           }">
+        
+        <!-- Hover Glow Effect -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+             style="background: radial-gradient(circle at center, rgba(var(--glow-color), 0.05) 0%, transparent 70%);"
+             [style.--glow-color]="project.theme === 'emerald' ? '16, 185, 129' : '6, 182, 212'">
+        </div>
+
+        <div class="p-6 flex flex-col h-full relative z-10">
+          <!-- Header Card -->
+          <div class="flex justify-between items-start mb-4">
+            <div class="p-3 rounded-lg bg-slate-800 border border-slate-700/50 group-hover:scale-110 transition-transform duration-300">
+              @if (project.icon === 'trending') {
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                  <polyline points="17 6 23 6 23 12"></polyline>
+                </svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400">
+                  <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"></path>
+                  <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"></path>
+                  <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path>
+                  <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path>
+                  <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                  <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                  <path d="M19.938 10.5a4 4 0 0 1 .585.396"></path>
+                  <path d="M6 18a4 4 0 0 1-1.938-1.5"></path>
+                  <path d="M19.938 16.5A4 4 0 0 1 18 18"></path>
+                </svg>
+              }
+            </div>
+            
+            <!-- Tooltip Badge (Static for now, implies functionality) -->
+            <div class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider border bg-opacity-10 backdrop-blur-md"
+                 [ngClass]="{
+                   'bg-emerald-500 border-emerald-500/30 text-emerald-400': project.theme === 'emerald',
+                   'bg-cyan-500 border-cyan-500/30 text-cyan-400': project.theme === 'cyan'
+                 }">
+              {{ project.badge }}
+            </div>
+          </div>
+
+          <h3 class="text-xl font-bold text-slate-100 mb-2 group-hover:text-white transition-colors">
+            {{ project.name }}
+          </h3>
+          
+          <p class="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+            {{ project.description }}
+          </p>
+
+          <!-- Tech Stack Badges -->
+          <div class="flex flex-wrap gap-2 mb-6">
+            @for (tech of project.techStack; track tech) {
+              <span class="px-2 py-1 text-xs font-mono font-medium text-slate-300 bg-slate-800 rounded border border-slate-700/50 group-hover:border-slate-600 transition-colors">
+                {{ tech }}
+              </span>
+            }
+          </div>
+
+          <!-- Action -->
+          <a [href]="project.url" 
+             target="_blank"
+             (click)="trackRepo(project)"
+             class="mt-auto flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 border border-transparent"
+             [ngClass]="{
+               'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-slate-900': project.theme === 'emerald',
+               'bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500 hover:text-slate-900': project.theme === 'cyan'
+             }">
+            <span>Ver Código</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Integration Flow Banner -->
+  <div class="mt-6 p-3 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center gap-3 text-sm text-slate-400 animate-in fade-in slide-in-from-top-2 duration-700 delay-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400 shrink-0">
+      <path d="M12 3v18"></path>
+      <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+      <path d="M3 9h18"></path>
+      <path d="M3 15h18"></path>
+    </svg>
+    <span class="text-center">
+      <strong class="text-slate-200">Integración:</strong> NeuraFutures consume el <span class="text-cyan-400">Sentiment Analysis</span> de Fundamental Hub en tiempo real.
+    </span>
+  </div>
+</section>

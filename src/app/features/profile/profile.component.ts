@@ -6,11 +6,12 @@ import { JsonPipe } from '@angular/common';
 import { ExperienceTimelineComponent } from './components/experience-timeline/experience-timeline.component';
 import { TechStackComponent } from './components/tech-stack/tech-stack.component';
 import { DataViewComponent } from './components/data-view/data-view.component';
+import { ResearchLabsComponent } from './components/research-labs/research-labs.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [JsonPipe, ExperienceTimelineComponent, TechStackComponent, DataViewComponent],
+  imports: [JsonPipe, ExperienceTimelineComponent, TechStackComponent, DataViewComponent, ResearchLabsComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
