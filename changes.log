@@ -1,5 +1,57 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 12:30] - Analytics Engineering: Snippet Telemetry Instrumentation
+- **Telemetría Granular**:
+  - Implementación del tracking de eventos `view_code_snippet` al interactuar con el acordeón de código.
+  - Captura dinámica de dimensiones: `snippet_name`, `snippet_category` (Frontend vs Cloud & Data) y `snippet_language`.
+  - Integración del sistema de telemetría resiliente para garantizar la captura de datos en presencia de AdBlockers.
+- **DX (Developer Experience)**:
+  - Inclusión de logs decorados en consola para modo desarrollo: "📊 Telemetría: Snippet [nombre] trackeado con éxito".
+- **ID Commit**: `8c2a4f1`
+
+## [2026-02-04 12:15] - UI/UX Reorganization: End-to-End Engineering View
+- **Information Architecture**:
+  - Reorganización de 'Code Snippets' en dos categorías estratégicas: "Frontend & App Architecture" y "Cloud & Data Engineering".
+  - Implementación de un sistema de **Badges Semánticos** ([APP], [DATA], [TEST], [CLOUD], [DB], [CONFIG]) con codificación de colores cian, esmeralda y ámbar.
+  - Actualización del UX Writing: "Ingeniería de Extremo a Extremo: Desde la gestión de estado reactivo y calidad de código (QA), hasta la optimización de infraestructuras críticas de Big Data (+6.8M registros)."
+- **UI/UX Polish**:
+  - Implementación de un **Responsive Grid** (2 columnas en desktop, 1 en mobile) para una comparativa visual de versatilidad técnica.
+  - Integración de iconografía emoji para una distinción inmediata de dominios.
+  - Refactor de `DataViewComponent` con Signals computadas para agrupamiento dinámico.
+- **ID Commit**: `58a9d21`
+
+## [2026-02-04 11:55] - Senior QA Strategy: Defensive Testing Snippet
+- **QA Automation & Resilience**:
+  - Refinamiento del 5to snippet (`analytics.service.spec.ts`) con enfoque en **Defensive Testing**.
+  - Implementación de lógica de validación de fallos silenciosos ante AdBlockers usando Jest Mocks (`spyOn`).
+  - Actualización de la descripción técnica en la UI destacando la estabilidad de flujos críticos y la robustez de la plataforma.
+- **UI/UX Consistency**:
+  - Verificación del layout tipo acordeón para asegurar la fluidez de los 5 snippets técnicos integrados.
+  - Sincronización de la narrativa de calidad de software en todo el portfolio.
+
+## [2026-02-04 11:45] - QA Automation Snippet & TDD Bio Integration
+- **Content Strategy (Senior QA Culture)**:
+  - Adición del 4to snippet (AWS Lambda/Serverless ETL) y 5to snippet (Analytics Service Spec/QA Resilience).
+  - Implementación de descripciones técnicas bilingües enfocadas en resiliencia, mocks avanzados y orquestación de datos.
+  - Actualización de la biografía profesional en `cv-data-es.json`, `cv-data-en.json` y el componente `Profile` para incluir el enfoque en **Test-Driven Development (TDD)** como pilar fundamental de ingeniería.
+- **Testing**:
+  - Garantía de consistencia visual en los bloques de código (estilo Night Owl/Prism).
+
+## [2026-02-04 11:30] - CV Download Fix & Analytics Instrumentation
+- **Bug Fix**:
+  - Reemplazo del botón de descarga por un enlace nativo `<a>` con atributo `download`.
+  - Solución definitiva al problema donde el CV se abría en una nueva pestaña en lugar de descargarse directamente.
+  - Eliminación de `target="_blank"` para optimizar el flujo de descarga en la misma instancia.
+- **Analytics & Instrumentation**:
+  - Implementación de un método genérico `trackEvent` en `AnalyticsService` para eventos personalizados con payload.
+  - Instrumentación del evento `cv_download` con metadatos de versión (`9_years_exp_data_optimized`).
+  - Mantenimiento del patrón de resiliencia ante bloqueadores de anuncios (AdBlockers).
+- **Testing & Quality Assurance**:
+  - Refactor completo de los tests de `AnalyticsService` para alinearlos con la implementación basada en `GoogleTagManagerService`.
+  - Actualización del spec de `ProfileComponent` para validar el contenido real del Hero (Architect & Tech Lead).
+  - Fix de regresión en `ProfileService` mediante la asignación de un idioma por defecto (`es`) en peticiones HTTP.
+- **ID Commit**: `18c628f`
+
 ## [2026-02-03 14:35] - Fix CV Download Routing
 - **Bug Fix**:
   - Reubicación de archivos PDF de `public/docs/` a `public/assets/docs/`.

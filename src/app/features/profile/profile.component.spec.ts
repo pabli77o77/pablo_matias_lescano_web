@@ -28,7 +28,8 @@ describe('ProfileComponent', () => {
     });
 
     expect(screen.getByText('Pablo Matias Lescano')).toBeTruthy();
-    expect(screen.getByText('Senior Engineer')).toBeTruthy();
+    expect(screen.getByText(/Software Architect/i)).toBeTruthy();
+    expect(screen.getByText(/Tech Lead/i)).toBeTruthy();
   });
 
   it('should show loading state', async () => {

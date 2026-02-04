@@ -2,6 +2,8 @@ export interface CodeSnippet {
   id: string;
   title: string;
   language: string;
+  category: 'frontend' | 'cloud-data';
+  tag: 'APP' | 'DATA' | 'TEST' | 'DB' | 'CLOUD' | 'CONFIG';
   description: { es: string; en: string };
   code: string;
 }
@@ -9,8 +11,10 @@ export interface CodeSnippet {
 export const CODE_SNIPPETS: CodeSnippet[] = [
   {
     id: 'store',
-    title: 'profile.store.ts (Angular 18 Signals)',
+    title: 'profile.store.ts',
     language: 'typescript',
+    category: 'frontend',
+    tag: 'APP',
     description: {
       es: 'Arquitectura de Estado Reactivo: Gestión centralizada con Angular 18 Signals, optimizando la detección de cambios y reduciendo el overhead de memoria en la SPA.',
       en: 'Reactive State Architecture: Centralized management with Angular 18 Signals, optimizing change detection and reducing memory overhead in the SPA.'
@@ -45,8 +49,10 @@ export class ProfileStore {
   },
   {
     id: 'resilience',
-    title: 'analytics.service.ts (Resilience Pattern)',
+    title: 'analytics.service.ts',
     language: 'typescript',
+    category: 'frontend',
+    tag: 'APP',
     description: {
       es: 'Resilience Pattern: Implementación de telemetría desacoplada que previene fallos críticos (undefined) ante el bloqueo de scripts de terceros por AdBlockers.',
       en: 'Resilience Pattern: Decoupled telemetry implementation that prevents critical failures (undefined) when third-party scripts are blocked by AdBlockers.'
@@ -73,9 +79,67 @@ private pushEvent(data: AnalyticsEvent) {
 }`
   },
   {
+    id: 'qa-testing',
+    title: 'analytics.service.spec.ts',
+    language: 'typescript',
+    category: 'frontend',
+    tag: 'TEST',
+    description: {
+      es: 'Quality Assurance (Jest): Implementación de Testing Unitario enfocado en la estabilidad de flujos críticos. Este snippet demuestra cómo garantizo la resiliencia de la capa de analítica mediante Mocks y validación de estados reactivos, asegurando que la plataforma sea robusta incluso ante fallos de servicios externos o bloqueadores de anuncios.',
+      en: 'Quality Assurance (Jest): Unit Testing implementation focused on the stability of critical flows. This snippet demonstrates how I guarantee the resilience of the analytics layer through Mocks and reactive state validation, ensuring the platform is robust even in the face of external service failures or ad blockers.'
+    },
+    code: `/**
+ * DEFENSIVE TESTING STRATEGY: Analytics Resilience
+ * Objetivo: Validar que el sistema no colapse si el DataLayer es bloqueado (AdBlocker).
+ */
+
+describe('AnalyticsService (QA Resilience)', () => {
+  let service: AnalyticsService;
+  let gtmService: GoogleTagManagerService;
+
+  beforeEach(() => {
+    // Escenario de Bloqueo: Simulamos que el objeto global no existe
+    delete (window as any).dataLayer;
+    
+    TestBed.configureTestingModule({
+      providers: [
+        AnalyticsService,
+        { provide: GoogleTagManagerService, useValue: { pushTag: jest.fn() } }
+      ]
+    });
+    service = TestBed.inject(AnalyticsService);
+    gtmService = TestBed.inject(GoogleTagManagerService);
+  });
+
+  describe('tracking resilience', () => {
+    it('should NOT throw exceptions when dataLayer is undefined', () => {
+      // Defensive Testing: Verificamos que el servicio degrade silenciosamente
+      // sin interrumpir el flujo del usuario principal (Fail-Safe).
+      expect(() => {
+        service.trackEvent('test_event', { category: 'qa' });
+      }).not.toThrow();
+    });
+
+    it('should call pushTag with correct parameters in normal conditions', () => {
+      // Restauramos mock para flujo normal
+      (window as any).dataLayer = [];
+      const spy = jest.spyOn(gtmService, 'pushTag');
+      
+      const testPayload = { event: 'ui_click', label: 'cta' };
+      service.trackEvent('ui_click', { label: 'cta' });
+
+      // Verificación de integridad de datos enviados
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(testPayload));
+    });
+  });
+});`
+  },
+  {
     id: 'data-arch',
-    title: 'postgresql_performance_tuning.sql (DB Optimization)',
+    title: 'postgresql_performance_tuning.sql',
     language: 'sql',
+    category: 'cloud-data',
+    tag: 'DB',
     description: {
       es: 'PostgreSQL Performance: Optimización crítica de una infraestructura de datos con <span class="text-emerald-400 font-bold">+6.8M</span> de registros provenientes de APIs de Meta y Google. Implementé una estrategia de indexación avanzada (Partial & Composite B-Tree) y orquestación de Vistas Materializadas. El resultado fue la reducción drástica de la latencia de <span class="text-cyan-400 font-bold">60s</span> a <span class="text-emerald-400 font-bold">&lt;3s</span> (<span class="text-emerald-400 font-bold">95%</span> de mejora), eliminando cuellos de botella en la capa de visualización y evitando el escalado vertical de hardware.',
       en: 'PostgreSQL Performance: Critical optimization of data infrastructure handling <span class="text-emerald-400 font-bold">+6.8M</span> records from Meta and Google APIs. Implemented advanced indexing strategy (Partial & Composite B-Tree) and Materialized View orchestration. Resulted in drastic latency reduction from <span class="text-cyan-400 font-bold">60s</span> to <span class="text-emerald-400 font-bold">&lt;3s</span> (<span class="text-emerald-400 font-bold">95%</span> improvement), eliminating bottlenecks in the visualization layer and preventing vertical hardware scaling.'
@@ -103,5 +167,50 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS marketing.daily_seo_summary AS
 SELECT fecha, count(distinct query) as unique_queries, sum(clicks) as total_clicks
 FROM marketing.gsc_query_performance
 GROUP BY fecha;`
+  },
+  {
+    id: 'aws-cloud',
+    title: 'aws_lambda_ingestion.py',
+    language: 'python',
+    category: 'cloud-data',
+    tag: 'CLOUD',
+    description: {
+      es: 'Cloud Data Ingestion: Orquestación de ingesta desde +95 fuentes de datos mediante AWS Lambda y EventBridge. Implementación de validación de esquemas y particionamiento dinámico en S3 (Data Lake) para optimizar costos de consulta en Athena.',
+      en: 'Cloud Data Ingestion: Orchestrating ingestion from +95 data sources using AWS Lambda and EventBridge. Implemented schema validation and dynamic S3 partitioning (Data Lake) to optimize Athena query costs.'
+    },
+    code: `/* 
+ * AWS Lambda: Data Ingestion Engine
+ * Pattern: Medallion Architecture (Bronze Layer)
+ */
+
+import boto3
+import pandas as pd
+from datetime import datetime
+
+def lambda_handler(event, context):
+    s3 = boto3.client('s3')
+    target_bucket = "company-data-lake"
+    
+    # 1. Dynamic Partitioning
+    now = datetime.now()
+    path = f"bronze/meta_ads/year={now.year}/month={now.month}/day={now.day}/"
+    
+    try:
+        # 2. Schema Enforcement & Transformation
+        raw_data = fetch_api_data(event['source_id'])
+        df = pd.DataFrame(raw_data)
+        
+        # 3. Parquet Export (Storage Efficiency)
+        parquet_buffer = df.to_parquet(index=False)
+        
+        s3.put_object(
+            Bucket=target_bucket,
+            Key=f"{path}ingest_{event['source_id']}.parquet",
+            Body=parquet_buffer
+        )
+        return {"status": 200, "records": len(df)}
+    except Exception as e:
+        logger.error(f"Ingestion failed: {str(e)}")
+        raise e`
   }
 ];
