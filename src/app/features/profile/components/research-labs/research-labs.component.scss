@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  margin-bottom: var(--spacing-xl);
+}
+
+.research-section {
+  width: 100%;
+}
+
+/* Custom glow animation if needed beyond Tailwind utilities */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* Ensure consistent card heights */
+.grid {
+  align-items: stretch;
+}

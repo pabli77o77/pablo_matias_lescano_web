@@ -1,5 +1,21 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 15:45] - R&D Labs: High-Contrast UI Refinement
+- **UI/UX Optimization**:
+  - Rediseño de botones de acción con estética "Glowing Border" para maximizar legibilidad en temas oscuros.
+  - Implementación de escalas de brillo dinámicas (Emerald/Cyan 400 a 300) y efectos de sombra neón en hover.
+  - Mejora de accesibilidad eliminando bloques de color sólido que interferían con el contraste del texto.
+- **New Feature: Research & Development Hub**:
+  - Implementación del componente `ResearchLabsComponent` para exhibir proyectos de Quant Trading e IA.
+  - Diseño visual "High-Tech" con efectos de brillo (Glow Effects) y layout Grid responsivo.
+  - Integración de badges de estado en tiempo real ("Live Testing / Beta Mode") con animaciones CSS.
+- **Proyectos Integrados**:
+  - **NeuraFutures**: Quant Engine con Optimización Bayesiana (Tema Esmeralda).
+  - **Fundamental Intelligence Hub**: Plataforma RAG con Gemini 1.5 Pro (Tema Cian).
+- **Analytics**:
+  - Tracking de clics salientes a GitHub (`view_external_repo`) para medir engagement técnico.
+- **ID Commit**: `4862e17`
+
 ## [2026-02-04 12:30] - Analytics Engineering: Snippet Telemetry Instrumentation
 - **Telemetría Granular**:
   - Implementación del tracking de eventos `view_code_snippet` al interactuar con el acordeón de código.
