@@ -1,5 +1,76 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 19:15] - UI/UX Refinement: Spacing & Navigation Cleanup
+- **Vertical Rhythm Optimization**:
+  - Refinamiento de espaciado en la sección de Snippets: Se ajustaron los márgenes del contenedor de pestañas (`mt-8`, `mb-10`) y el espacio entre botones (`gap-6`) para una jerarquía visual más equilibrada.
+  - Mejora estética de los botones tipo pill: Se amplió el padding horizontal (`px-6`) y se aplicó `tracking-wide` para elevar el tono premium y la legibilidad.
+- **Navigation Cleanup**:
+  - Remoción del acceso directo a "Código" en el Sidebar Navigation para mantener la coherencia del flujo de usuario (evitando saltos de vista disruptivos).
+  - Actualización del label "Exp" a "Experiencia" para mayor claridad contextual.
+- **Stability**:
+  - Validación de la integridad del build y resolución de inconsistencias en el renderizado condicional de componentes.
+- **ID Commit**: `89eae4a`
+
+## [2026-02-04 18:30] - Visualization Logic & UX Polish
+- **Navigation Enhancement**:
+  - Implementación de **Context Labels** en el Sidebar de navegación. Los textos ("Inicio", "Experiencia", etc.) aparecen con una transición de opacidad a la izquierda del punto de anclaje, mejorando la orientación sin saturar la interfaz.
+- **Content Optimization**:
+  - Refactor de la sección "Code Snippets" mediante un sistema de **Tabs de Filtrado** (Frontend / Cloud / Todo).
+  - Lógica de renderizado condicional (`@if`) para reducir drásticamente la altura de la página, mostrando solo el contenido relevante para el usuario.
+- **Visual Fixes**:
+  - Corrección definitiva del ícono de SASS con el path SVG oficial.
+- **ID Commit**: `Pending`
+
+## [2026-02-04 18:00] - Master Design Restoration & Surgical Improvements
+- **Layout Restoration (Production Fidelity)**:
+  - Restauración completa de la estructura HTML/SCSS de **TechStack** y **Labs** al diseño original de la rama master (Bento Grid asimétrico).
+  - Eliminación de estructuras flex experimentales en el layout principal de desktop para garantizar la alineación perfecta de las tarjetas.
+- **Mobile Optimization (Non-Destructive)**:
+  - Implementación de scroll horizontal (`snap-x`) **confinado internamente** en las listas de items, evitando cualquier impacto en el ancho del `body` o el desplazamiento lateral de la página completa.
+- **Visual Polish**:
+  - Fix definitivo del ícono de SASS con SVG inyectado y estilado (`width: 100%`).
+  - Refinamiento de tooltips en Sticky Nav: Aparición suave a la izquierda (`right-full`) sin desplazamiento de layout.
+- **ID Commit**: `Pending`
+
+## [2026-02-04 17:30] - Strategic Restoration & Optimization
+- **Layout Integrity (Desktop Restoration)**:
+  - Restauración completa del layout **Bento Grid** original para resoluciones de escritorio (`md:`+), eliminando comportamientos flex experimentales que afectaban la alineación.
+  - Confinamiento estricto de la lógica de **Mobile Swiper** (`snap-x`) dentro de contenedores aislados, preservando la estabilidad global del `body`.
+- **Navigation Enhancement**:
+  - Implementación de **Sticky Nav Tooltips** con posicionamiento relativo a la izquierda (`right-full`), mejorando la accesibilidad sin invadir el espacio de contenido.
+  - Refactor de la sección de **Code Snippets** a un sistema de **Tabs de Filtrado** (Frontend / Cloud / Todos), optimizando drásticamente la longitud vertical de la página.
+- **Visual Polish**:
+  - Fix definitivo del ícono de SASS con SVG vectorial optimizado.
+- **ID Commit**: `Pending`
+
+## [2026-02-04 17:00] - Emergency Fixes: Mobile Overflow & Navigation
+- **Layout Stability**:
+  - Corrección crítica de `Horizontal Overflow` en móviles aplicando `overflow-x: hidden` global y limitando el ancho de los swipers (`max-w-full`).
+  - Restauración del layout Grid en desktop para la sección de Tech Stack, eliminando conflictos con las propiedades flex de móvil.
+- **Navigation & UX**:
+  - Implementación de **Sticky Jump Menu** avanzado con tooltips dinámicos (About, Stack, Code, Labs, Exp) que aparecen a la izquierda en hover.
+  - Aseguramiento del path SVG correcto para el ícono de SASS.
+- **ID Commit**: `Pending`
+
+## [2026-02-04 16:30] - Mobile UX: Horizontal Swiper Implementation
+- **Layout Compression**:
+  - Conversión de grillas verticales a **Carruseles Horizontales** (Swipers) en dispositivos móviles para las secciones de "Tech Stack" y "R&D Labs".
+  - Implementación de `snap-x snap-mandatory` para una navegación fluida y magnética.
+  - Uso de `scrollbar-hide` para mantener una estética limpia en smartphones.
+- **Responsive Optimization**:
+  - Mantenimiento del layout de grilla estática en resoluciones de escritorio (md+).
+  - Ajuste de paddings negativos (`-mx-4`) para permitir scroll de borde a borde en pantallas pequeñas sin perder el padding interno del contenido.
+
+## [2026-02-04 16:15] - UX Optimization: Compact Navigation & Visual Polish
+- **Layout Compression**:
+  - Transformación de la sección "Code Snippets" mediante un sistema de **Tabs de Filtrado** (Pills UI).
+  - Categorías: "Todo", "Frontend & App", "Cloud & Data".
+  - Reducción significativa del scroll vertical al ocultar snippets no relevantes para el contexto actual.
+- **Visual Fixes**:
+  - Reemplazo del ícono de SASS por el logotipo oficial vectorial optimizado (#cf649a).
+  - Ajuste de comportamiento en "R&D Labs" para móviles: Scroll horizontal (`flex-nowrap`) para mejorar la navegación en pantallas pequeñas.
+- **ID Commit**: `Pending`
+
 ## [2026-02-04 15:45] - R&D Labs: High-Contrast UI Refinement
 - **UI/UX Optimization**:
   - Rediseño de botones de acción con estética "Glowing Border" para maximizar legibilidad en temas oscuros.

@@ -1,22 +1,28 @@
 <div class="data-view-wrapper">
   
   <!-- TABS NAVIGATION (Pills System) -->
-  <div class="tabs-container">
-    <button class="pill-btn" 
-            [class.active]="activeTab() === 'all'"
-            (click)="setTab('all')">
+  <div class="flex flex-wrap gap-6 mt-8 mb-10">
+    <button (click)="setTab('all')" 
+            class="px-6 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 border"
+            [ngClass]="activeTab() === 'all' 
+              ? 'bg-blue-500/10 text-blue-400 border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
+              : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:text-white hover:border-slate-500'">
       {{ currentLang() === 'es' ? 'Todo' : 'All' }}
     </button>
     
-    <button class="pill-btn" 
-            [class.active]="activeTab() === 'frontend'"
-            (click)="setTab('frontend')">
+    <button (click)="setTab('frontend')" 
+            class="px-6 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 border"
+            [ngClass]="activeTab() === 'frontend' 
+              ? 'bg-blue-500/10 text-blue-400 border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
+              : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:text-white hover:border-slate-500'">
       Frontend & App
     </button>
     
-    <button class="pill-btn" 
-            [class.active]="activeTab() === 'data'"
-            (click)="setTab('data')">
+    <button (click)="setTab('data')" 
+            class="px-6 py-2 rounded-full text-sm font-medium tracking-wide transition-all duration-300 border"
+            [ngClass]="activeTab() === 'data' 
+              ? 'bg-blue-500/10 text-blue-400 border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.2)]' 
+              : 'border-slate-700 bg-slate-800/50 text-slate-400 hover:text-white hover:border-slate-500'">
       Cloud & Data
     </button>
   </div>
