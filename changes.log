@@ -1,5 +1,20 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 11:30] - CV Download Fix & Analytics Instrumentation
+- **Bug Fix**:
+  - Reemplazo del botón de descarga por un enlace nativo `<a>` con atributo `download`.
+  - Solución definitiva al problema donde el CV se abría en una nueva pestaña en lugar de descargarse directamente.
+  - Eliminación de `target="_blank"` para optimizar el flujo de descarga en la misma instancia.
+- **Analytics & Instrumentation**:
+  - Implementación de un método genérico `trackEvent` en `AnalyticsService` para eventos personalizados con payload.
+  - Instrumentación del evento `cv_download` con metadatos de versión (`9_years_exp_data_optimized`).
+  - Mantenimiento del patrón de resiliencia ante bloqueadores de anuncios (AdBlockers).
+- **Testing & Quality Assurance**:
+  - Refactor completo de los tests de `AnalyticsService` para alinearlos con la implementación basada en `GoogleTagManagerService`.
+  - Actualización del spec de `ProfileComponent` para validar el contenido real del Hero (Architect & Tech Lead).
+  - Fix de regresión en `ProfileService` mediante la asignación de un idioma por defecto (`es`) en peticiones HTTP.
+- **ID Commit**: `18c628f`
+
 ## [2026-02-03 14:35] - Fix CV Download Routing
 - **Bug Fix**:
   - Reubicación de archivos PDF de `public/docs/` a `public/assets/docs/`.
