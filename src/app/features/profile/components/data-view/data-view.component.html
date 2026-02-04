@@ -1,96 +1,73 @@
 <div class="data-view-wrapper">
   
-  <!-- 1. JSON PROFILE (GENERAL) -->
-  <div class="code-window header-window">
-    <div class="window-header clickable" (click)="toggleSection('json-profile')">
-      <div class="header-left">
-        <span class="toggle-icon">{{ expandedSection() === 'json-profile' ? '▼' : '▶' }}</span>
-        <span class="file-icon json">⚙️</span>
-        <span class="file-name">pablo_lescano_profile.json</span>
-        <span class="tag-badge badge-config">CONFIG</span>
-      </div>
-      <div class="lang">JSON</div>
-    </div>
+  <!-- TABS NAVIGATION (Pills System) -->
+  <div class="tabs-container">
+    <button class="pill-btn" 
+            [class.active]="activeTab() === 'all'"
+            (click)="setTab('all')">
+      {{ currentLang() === 'es' ? 'Todo' : 'All' }}
+    </button>
     
-    @if (expandedSection() === 'json-profile') {
-      <div class="window-body fade-in">
-        <!-- ARCHITECT NOTE -->
-        <div class="architect-note-container">
-          <div class="note-header">
-            <div class="header-left">
-              <span class="note-icon">⚡</span>
-              <span>{{ ui().noteLabel }}</span>
-            </div>
-            <button (click)="copyConcept(jsonProfileDescription())" class="copy-concept-btn" [class.copied]="copyState() === 'copied'">
-              <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
-            </button>
-          </div>
-          <blockquote class="note-content">
-            "{{ jsonProfileDescription() }}"
-          </blockquote>
-        </div>
-        <pre><code>{{ formattedData() }}</code></pre>
-      </div>
-    }
+    <button class="pill-btn" 
+            [class.active]="activeTab() === 'frontend'"
+            (click)="setTab('frontend')">
+      Frontend & App
+    </button>
+    
+    <button class="pill-btn" 
+            [class.active]="activeTab() === 'data'"
+            (click)="setTab('data')">
+      Cloud & Data
+    </button>
   </div>
 
-  <div class="categories-grid">
-    <!-- 2. FRONTEND & APP ARCHITECTURE -->
-    <section class="category-section">
-      <h3 class="category-title">
-        <span class="cat-icon">🖼️</span> {{ categoryLabels().frontend }}
-      </h3>
-      
-      @for (snippet of frontendSnippets(); track snippet.id) {
-        <div class="code-window">
-          <div class="window-header clickable" (click)="toggleSection(snippet.id)">
-            <div class="header-left">
-              <span class="toggle-icon">{{ expandedSection() === snippet.id ? '▼' : '▶' }}</span>
-              <span class="file-icon code">📄</span>
-              <span class="file-name">{{ snippet.title }}</span>
-              <span class="tag-badge" [ngClass]="getTagClass(snippet.tag)">{{ snippet.tag }}</span>
-            </div>
-            <div class="lang">{{ snippet.language | uppercase }}</div>
+  <div class="snippets-container">
+    <!-- 1. JSON PROFILE (GENERAL) - Visible solo en pestaña 'All' para reducir altura -->
+    @if (activeTab() === 'all') {
+      <div class="code-window header-window fade-in">
+        <div class="window-header clickable" (click)="toggleSection('json-profile')">
+          <div class="header-left">
+            <span class="toggle-icon">{{ expandedSection() === 'json-profile' ? '▼' : '▶' }}</span>
+            <span class="file-icon json">⚙️</span>
+            <span class="file-name">pablo_lescano_profile.json</span>
+            <span class="tag-badge badge-config">CONFIG</span>
           </div>
-          
-          @if (expandedSection() === snippet.id) {
-            <div class="window-body fade-in">
-              <div class="architect-note-container">
-                <div class="note-header">
-                  <div class="header-left">
-                    <span class="note-icon">⚡</span>
-                    <span>{{ ui().noteLabel }}</span>
-                  </div>
-                  <button (click)="copyConcept(getDescription(snippet))" class="copy-concept-btn" [class.copied]="copyState() === 'copied'">
-                    <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
-                  </button>
-                </div>
-                <blockquote class="note-content" [innerHTML]="'&quot;' + getDescription(snippet) + '&quot;'"></blockquote>
-              </div>
-              <pre><code>{{ snippet.code }}</code></pre>
-            </div>
-          }
+          <div class="lang">JSON</div>
         </div>
-      }
-    </section>
+        
+        @if (expandedSection() === 'json-profile') {
+          <div class="window-body fade-in">
+            <!-- ARCHITECT NOTE -->
+            <div class="architect-note-container">
+              <div class="note-header">
+                <div class="header-left">
+                  <span class="note-icon">⚡</span>
+                  <span>{{ ui().noteLabel }}</span>
+                </div>
+                <button (click)="copyConcept(jsonProfileDescription())" class="copy-concept-btn" [class.copied]="copyState() === 'copied'">
+                  <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
+                </button>
+              </div>
+              <blockquote class="note-content">
+                "{{ jsonProfileDescription() }}"
+              </blockquote>
+            </div>
+            <pre><code>{{ formattedData() }}</code></pre>
+          </div>
+        }
+      </div>
+    }
 
-    <!-- 3. CLOUD & DATA ENGINEERING -->
-    <section class="category-section">
-      <h3 class="category-title">
-        <span class="cat-icon">🗄️</span> {{ categoryLabels().data }}
-      </h3>
-      
-      @for (snippet of dataSnippets(); track snippet.id) {
-        <div class="code-window">
+    <!-- 2. FILTERED SNIPPETS LIST -->
+    <div class="snippets-list">
+      @for (snippet of filteredSnippets(); track snippet.id) {
+        <div class="code-window fade-in">
           <div class="window-header clickable" (click)="toggleSection(snippet.id)">
             <div class="header-left">
               <span class="toggle-icon">{{ expandedSection() === snippet.id ? '▼' : '▶' }}</span>
               <span class="file-icon code">📄</span>
               <span class="file-name">{{ snippet.title }}</span>
               <span class="tag-badge" [ngClass]="getTagClass(snippet.tag)">{{ snippet.tag }}</span>
-              @if (snippet.id === 'data-arch') {
-                <span class="impact-badge">High Impact</span>
-              }
             </div>
             <div class="lang">{{ snippet.language | uppercase }}</div>
           </div>
@@ -114,6 +91,6 @@
           }
         </div>
       }
-    </section>
+    </div>
   </div>
 </div>

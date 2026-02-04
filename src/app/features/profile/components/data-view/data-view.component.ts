@@ -18,41 +18,44 @@ export class DataViewComponent {
 
   snippets = CODE_SNIPPETS;
 
-  // Snippets categorizados para la UI
-  frontendSnippets = computed(() => this.snippets.filter(s => s.category === 'frontend'));
-  dataSnippets = computed(() => this.snippets.filter(s => s.category === 'cloud-data'));
-  
-  // Controla qué sección está expandida. Por defecto todo cerrado.
+  // Estado de Tabs: 'all' | 'frontend' | 'data'
+  activeTab = signal<'all' | 'frontend' | 'data'>('all');
+
+  // Filtrado de Snippets para la UI
+  filteredSnippets = computed(() => {
+    const filter = this.activeTab();
+    if (filter === 'all') return this.snippets;
+    
+    return this.snippets.filter(s => {
+      if (filter === 'frontend') {
+        return ['store', 'resilience', 'qa-testing'].includes(s.id);
+      }
+      if (filter === 'data') {
+        return ['data-arch', 'aws-cloud'].includes(s.id);
+      }
+      return true;
+    });
+  });
+
+  // Estado de expansión de los acordeones
   expandedSection = signal<string>('');
   
-  // Controla el estado del botón de copiar (feedback visual)
+  // Feedback visual de copiado
   copyState = signal<'idle' | 'copied'>('idle');
 
   formattedData = computed(() => {
     return JSON.stringify(this.data, null, 2);
   });
 
-  // Selector de idioma reactivo
   currentLang = this.store.language;
 
-  // Labels de categorías
-  categoryLabels = computed(() => {
-    return this.currentLang() === 'es' ? {
-      frontend: 'Frontend & App Architecture',
-      data: 'Cloud & Data Engineering'
-    } : {
-      frontend: 'Frontend & App Architecture',
-      data: 'Cloud & Data Engineering'
-    };
-  });
-
+  // Descripciones localizadas
   jsonProfileDescription = computed(() => {
     return this.currentLang() === 'es' 
       ? 'Data Schema: Estructura de dominio extensible que sirve como fuente de verdad única para la renderización dinámica de toda la plataforma.'
       : 'Data Schema: Extensible domain structure serving as the single source of truth for the dynamic rendering of the entire platform.';
   });
 
-  // Textos de UI Localizados
   ui = computed(() => {
     const lang = this.currentLang();
     return lang === 'es' ? {
@@ -66,6 +69,12 @@ export class DataViewComponent {
     };
   });
 
+  // Acciones
+  setTab(tab: 'all' | 'frontend' | 'data') {
+    this.activeTab.set(tab);
+    this.expandedSection.set(''); // Cerramos cualquier snippet abierto al cambiar de pestaña
+  }
+
   toggleSection(id: string) {
     if (this.expandedSection() === id) {
       this.expandedSection.set('');
@@ -76,10 +85,8 @@ export class DataViewComponent {
   }
 
   private trackSnippetView(id: string) {
-    // Localizar el snippet para extraer metadatos
     const snippet = this.snippets.find(s => s.id === id);
     
-    // El ID 'json-profile' es un caso especial fuera del array de snippets
     if (id === 'json-profile') {
       this.analytics.trackEvent('view_code_snippet', {
         snippet_name: 'pablo_lescano_profile.json',
@@ -95,10 +102,6 @@ export class DataViewComponent {
         snippet_category: snippet.category === 'frontend' ? 'Frontend' : 'Cloud & Data',
         snippet_language: snippet.language
       });
-
-      if (isDevMode()) {
-        console.log(`📊 Telemetría: Snippet [${snippet.title}] trackeado con éxito`);
-      }
     }
   }
 
@@ -114,7 +117,6 @@ export class DataViewComponent {
     }
   }
 
-  // Método helper para obtener la descripción traducida
   getDescription(snippet: any): string {
     return snippet.description[this.currentLang()] || snippet.description.en;
   }
