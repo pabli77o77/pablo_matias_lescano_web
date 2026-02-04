@@ -1,35 +1,27 @@
 <div class="data-view-wrapper">
   
-  <!-- 1. JSON PROFILE -->
-  <div class="code-window">
+  <!-- 1. JSON PROFILE (GENERAL) -->
+  <div class="code-window header-window">
     <div class="window-header clickable" (click)="toggleSection('json-profile')">
       <div class="header-left">
         <span class="toggle-icon">{{ expandedSection() === 'json-profile' ? '▼' : '▶' }}</span>
-        <span class="file-icon json">{{ '{' }}{{ '}' }}</span>
+        <span class="file-icon json">⚙️</span>
         <span class="file-name">pablo_lescano_profile.json</span>
+        <span class="tag-badge badge-config">CONFIG</span>
       </div>
       <div class="lang">JSON</div>
     </div>
     
     @if (expandedSection() === 'json-profile') {
       <div class="window-body fade-in">
-        
-        <!-- ARCHITECT NOTE (JSON Schema) -->
+        <!-- ARCHITECT NOTE -->
         <div class="architect-note-container">
           <div class="note-header">
             <div class="header-left">
               <span class="note-icon">⚡</span>
               <span>{{ ui().noteLabel }}</span>
             </div>
-            <button (click)="copyConcept(jsonProfileDescription())" class="copy-concept-btn" [class.copied]="copyState() === 'copied'" title="Copiar razonamiento técnico">
-              <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                @if (copyState() === 'copied') {
-                  <path d="M5 13l4 4L19 7"></path>
-                } @else {
-                  <path d="M8 10a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-8z"></path>
-                  <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"></path>
-                }
-              </svg>
+            <button (click)="copyConcept(jsonProfileDescription())" class="copy-concept-btn" [class.copied]="copyState() === 'copied'">
               <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
             </button>
           </div>
@@ -37,56 +29,91 @@
             "{{ jsonProfileDescription() }}"
           </blockquote>
         </div>
-
         <pre><code>{{ formattedData() }}</code></pre>
       </div>
     }
   </div>
 
-  <!-- 2. CODE SNIPPETS -->
-  @for (snippet of snippets; track snippet.id) {
-    <div class="code-window">
-      <div class="window-header clickable" (click)="toggleSection(snippet.id)">
-        <div class="header-left">
-          <span class="toggle-icon">{{ expandedSection() === snippet.id ? '▼' : '▶' }}</span>
-          <span class="file-icon code">&lt;/&gt;</span>
-          <span class="file-name">{{ snippet.title }}</span>
-          @if (snippet.id === 'medallion') {
-            <span class="impact-badge">Most Viewed / Critical Logic</span>
+  <div class="categories-grid">
+    <!-- 2. FRONTEND & APP ARCHITECTURE -->
+    <section class="category-section">
+      <h3 class="category-title">
+        <span class="cat-icon">🖼️</span> {{ categoryLabels().frontend }}
+      </h3>
+      
+      @for (snippet of frontendSnippets(); track snippet.id) {
+        <div class="code-window">
+          <div class="window-header clickable" (click)="toggleSection(snippet.id)">
+            <div class="header-left">
+              <span class="toggle-icon">{{ expandedSection() === snippet.id ? '▼' : '▶' }}</span>
+              <span class="file-icon code">📄</span>
+              <span class="file-name">{{ snippet.title }}</span>
+              <span class="tag-badge" [ngClass]="getTagClass(snippet.tag)">{{ snippet.tag }}</span>
+            </div>
+            <div class="lang">{{ snippet.language | uppercase }}</div>
+          </div>
+          
+          @if (expandedSection() === snippet.id) {
+            <div class="window-body fade-in">
+              <div class="architect-note-container">
+                <div class="note-header">
+                  <div class="header-left">
+                    <span class="note-icon">⚡</span>
+                    <span>{{ ui().noteLabel }}</span>
+                  </div>
+                  <button (click)="copyConcept(getDescription(snippet))" class="copy-concept-btn" [class.copied]="copyState() === 'copied'">
+                    <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
+                  </button>
+                </div>
+                <blockquote class="note-content" [innerHTML]="'&quot;' + getDescription(snippet) + '&quot;'"></blockquote>
+              </div>
+              <pre><code>{{ snippet.code }}</code></pre>
+            </div>
           }
         </div>
-        <div class="lang">{{ snippet.language | uppercase }}</div>
-      </div>
-      
-      @if (expandedSection() === snippet.id) {
-        <div class="window-body fade-in">
-          
-          <!-- ARCHITECT NOTE (Bilingual Tech Lead Insight) -->
-          <div class="architect-note-container">
-            <div class="note-header">
-              <div class="header-left">
-                <span class="note-icon">⚡</span>
-                <span>{{ ui().noteLabel }}</span>
-              </div>
-              <button (click)="copyConcept(getDescription(snippet))" class="copy-concept-btn" [class.copied]="copyState() === 'copied'" title="Copiar razonamiento técnico">
-                <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  @if (copyState() === 'copied') {
-                    <path d="M5 13l4 4L19 7"></path> <!-- Check Icon -->
-                  } @else {
-                    <path d="M8 10a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-8z"></path>
-                    <path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"></path>
-                  }
-                </svg>
-                <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
-              </button>
-            </div>
-            <blockquote class="note-content" [innerHTML]="'&quot;' + getDescription(snippet) + '&quot;'">
-            </blockquote>
-          </div>
+      }
+    </section>
 
-          <pre><code>{{ snippet.code }}</code></pre>
+    <!-- 3. CLOUD & DATA ENGINEERING -->
+    <section class="category-section">
+      <h3 class="category-title">
+        <span class="cat-icon">🗄️</span> {{ categoryLabels().data }}
+      </h3>
+      
+      @for (snippet of dataSnippets(); track snippet.id) {
+        <div class="code-window">
+          <div class="window-header clickable" (click)="toggleSection(snippet.id)">
+            <div class="header-left">
+              <span class="toggle-icon">{{ expandedSection() === snippet.id ? '▼' : '▶' }}</span>
+              <span class="file-icon code">📄</span>
+              <span class="file-name">{{ snippet.title }}</span>
+              <span class="tag-badge" [ngClass]="getTagClass(snippet.tag)">{{ snippet.tag }}</span>
+              @if (snippet.id === 'data-arch') {
+                <span class="impact-badge">High Impact</span>
+              }
+            </div>
+            <div class="lang">{{ snippet.language | uppercase }}</div>
+          </div>
+          
+          @if (expandedSection() === snippet.id) {
+            <div class="window-body fade-in">
+              <div class="architect-note-container">
+                <div class="note-header">
+                  <div class="header-left">
+                    <span class="note-icon">⚡</span>
+                    <span>{{ ui().noteLabel }}</span>
+                  </div>
+                  <button (click)="copyConcept(getDescription(snippet))" class="copy-concept-btn" [class.copied]="copyState() === 'copied'">
+                    <span>{{ copyState() === 'copied' ? ui().copied : ui().copy }}</span>
+                  </button>
+                </div>
+                <blockquote class="note-content" [innerHTML]="'&quot;' + getDescription(snippet) + '&quot;'"></blockquote>
+              </div>
+              <pre><code>{{ snippet.code }}</code></pre>
+            </div>
+          }
         </div>
       }
-    </div>
-  }
+    </section>
+  </div>
 </div>

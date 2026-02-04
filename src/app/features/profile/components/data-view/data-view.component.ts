@@ -1,12 +1,12 @@
 import { Component, Input, computed, signal, inject } from '@angular/core';
-import { JsonPipe, UpperCasePipe } from '@angular/common';
+import { JsonPipe, UpperCasePipe, NgClass } from '@angular/common';
 import { CODE_SNIPPETS } from '@core/constants/code-snippets';
 import { ProfileStore } from '@core/store/profile.store';
 
 @Component({
   selector: 'app-data-view',
   standalone: true,
-  imports: [JsonPipe, UpperCasePipe],
+  imports: [JsonPipe, UpperCasePipe, NgClass],
   templateUrl: './data-view.component.html',
   styleUrl: './data-view.component.scss'
 })
@@ -15,6 +15,10 @@ export class DataViewComponent {
   @Input({ required: true }) data: any;
 
   snippets = CODE_SNIPPETS;
+
+  // Snippets categorizados para la UI
+  frontendSnippets = computed(() => this.snippets.filter(s => s.category === 'frontend'));
+  dataSnippets = computed(() => this.snippets.filter(s => s.category === 'cloud-data'));
   
   // Controla qué sección está expandida. Por defecto todo cerrado.
   expandedSection = signal<string>('');
@@ -28,6 +32,17 @@ export class DataViewComponent {
 
   // Selector de idioma reactivo
   currentLang = this.store.language;
+
+  // Labels de categorías
+  categoryLabels = computed(() => {
+    return this.currentLang() === 'es' ? {
+      frontend: 'Frontend & App Architecture',
+      data: 'Cloud & Data Engineering'
+    } : {
+      frontend: 'Frontend & App Architecture',
+      data: 'Cloud & Data Engineering'
+    };
+  });
 
   jsonProfileDescription = computed(() => {
     return this.currentLang() === 'es' 
@@ -48,6 +63,18 @@ export class DataViewComponent {
       noteLabel: 'Architect Note'
     };
   });
+
+  getTagClass(tag: string): string {
+    switch (tag) {
+      case 'APP': return 'badge-app';
+      case 'DATA':
+      case 'DB':
+      case 'CLOUD': return 'badge-data';
+      case 'TEST': return 'badge-test';
+      case 'CONFIG': return 'badge-config';
+      default: return '';
+    }
+  }
 
   toggleSection(id: string) {
     if (this.expandedSection() === id) {

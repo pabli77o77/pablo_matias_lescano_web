@@ -1,5 +1,16 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 12:15] - UI/UX Reorganization: End-to-End Engineering View
+- **Information Architecture**:
+  - Reorganización de 'Code Snippets' en dos categorías estratégicas: "Frontend & App Architecture" y "Cloud & Data Engineering".
+  - Implementación de un sistema de **Badges Semánticos** ([APP], [DATA], [TEST], [CLOUD], [DB], [CONFIG]) con codificación de colores cian, esmeralda y ámbar.
+  - Actualización del UX Writing: "Ingeniería de Extremo a Extremo: Desde la gestión de estado reactivo y calidad de código (QA), hasta la optimización de infraestructuras críticas de Big Data (+6.8M registros)."
+- **UI/UX Polish**:
+  - Implementación de un **Responsive Grid** (2 columnas en desktop, 1 en mobile) para una comparativa visual de versatilidad técnica.
+  - Integración de iconografía emoji para una distinción inmediata de dominios.
+  - Refactor de `DataViewComponent` con Signals computadas para agrupamiento dinámico.
+- **ID Commit**: `58a9d21`
+
 ## [2026-02-04 11:55] - Senior QA Strategy: Defensive Testing Snippet
 - **QA Automation & Resilience**:
   - Refinamiento del 5to snippet (`analytics.service.spec.ts`) con enfoque en **Defensive Testing**.
