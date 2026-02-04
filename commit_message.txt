@@ -1,8 +1,0 @@
-feat(analytics): instrument CV download and fix direct download bug
-
-- Updated CV download button to use native <a> tag with 'download' attribute.
-- Fixed bug where CV would open in a new tab instead of downloading.
-- Integrated resilient analytics using AnalyticsService.trackEvent.
-- Updated AnalyticsService to include generic trackEvent method.
-- Refactored unit tests for AnalyticsService and ProfileComponent to match current implementation.
-- Fixed ProfileService potential undefined language issue in tests.

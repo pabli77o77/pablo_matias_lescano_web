@@ -103,5 +103,106 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS marketing.daily_seo_summary AS
 SELECT fecha, count(distinct query) as unique_queries, sum(clicks) as total_clicks
 FROM marketing.gsc_query_performance
 GROUP BY fecha;`
+  },
+  {
+    id: 'aws-cloud',
+    title: 'aws_lambda_ingestion.py (Serverless ETL)',
+    language: 'python',
+    description: {
+      es: 'Cloud Data Ingestion: Orquestación de ingesta desde +95 fuentes de datos mediante AWS Lambda y EventBridge. Implementación de validación de esquemas y particionamiento dinámico en S3 (Data Lake) para optimizar costos de consulta en Athena.',
+      en: 'Cloud Data Ingestion: Orchestrating ingestion from +95 data sources using AWS Lambda and EventBridge. Implemented schema validation and dynamic S3 partitioning (Data Lake) to optimize Athena query costs.'
+    },
+    code: `/* 
+ * AWS Lambda: Data Ingestion Engine
+ * Pattern: Medallion Architecture (Bronze Layer)
+ */
+
+import boto3
+import pandas as pd
+from datetime import datetime
+
+def lambda_handler(event, context):
+    s3 = boto3.client('s3')
+    target_bucket = "company-data-lake"
+    
+    # 1. Dynamic Partitioning
+    now = datetime.now()
+    path = f"bronze/meta_ads/year={now.year}/month={now.month}/day={now.day}/"
+    
+    try:
+        # 2. Schema Enforcement & Transformation
+        raw_data = fetch_api_data(event['source_id'])
+        df = pd.DataFrame(raw_data)
+        
+        # 3. Parquet Export (Storage Efficiency)
+        parquet_buffer = df.to_parquet(index=False)
+        
+        s3.put_object(
+            Bucket=target_bucket,
+            Key=f"{path}ingest_{event['source_id']}.parquet",
+            Body=parquet_buffer
+        )
+        return {"status": 200, "records": len(df)}
+    except Exception as e:
+        logger.error(f"Ingestion failed: {str(e)}")
+        raise e`
+  },
+  {
+    id: 'qa-testing',
+    title: 'analytics.service.spec.ts (QA & Resilience)',
+    language: 'typescript',
+    description: {
+      es: 'Quality Assurance (Jest): Implementación de Testing Unitario y de Integración. Este snippet demuestra cómo garantizo la resiliencia de la capa de analítica mediante Mocks y validación de estados reactivos, asegurando una cobertura robusta en flujos críticos.',
+      en: 'Quality Assurance (Jest): Implementation of Unit and Integration Testing. This snippet demonstrates how I guarantee the resilience of the analytics layer through Mocks and validation of reactive states, ensuring robust coverage in critical flows.'
+    },
+    code: `/* 
+ * Unit Testing: Analytics Resilience
+ * Focus: Silent Degradation under AdBlockers
+ */
+
+describe('AnalyticsService (QA Automation)', () => {
+  let service: AnalyticsService;
+  let gtmMock: jest.Mocked<GoogleTagManagerService>;
+
+  beforeEach(() => {
+    // 1. Mocking Global Infrastructure
+    (window as any).dataLayer = undefined; // Simulating Strict AdBlocker
+    
+    gtmMock = {
+      pushTag: jest.fn().mockReturnValue(Promise.resolve())
+    } as any;
+
+    TestBed.configureTestingModule({
+      providers: [
+        AnalyticsService,
+        { provide: GoogleTagManagerService, useValue: gtmMock }
+      ]
+    });
+    service = TestBed.inject(AnalyticsService);
+  });
+
+  it('should not throw error when dataLayer is blocked', () => {
+    // 2. Act & Assert: The system must degrade gracefully
+    expect(() => {
+      service.trackEvent('conversion_test', { value: 100 });
+    }).not.toThrow();
+
+    // 3. Verify interaction attempt
+    expect(gtmMock.pushTag).toHaveBeenCalled();
+  });
+
+  it('should maintain internal state even if GTM fails', () => {
+    const pushSpy = jest.spyOn(console, 'warn').mockImplementation();
+    
+    // Simulating GTM internal crash
+    gtmMock.pushTag.mockReturnValue(Promise.reject('Network Error'));
+    
+    service.trackEvent('critical_action');
+    
+    // UI remains interactive while analytics handles failure in background
+    expect(service.isInitialized()).toBe(true);
+    pushSpy.mockRestore();
+  });
+});`
   }
 ];

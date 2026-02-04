@@ -1,5 +1,13 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 11:45] - QA Automation Snippet & TDD Bio Integration
+- **Content Strategy (Senior QA Culture)**:
+  - Adición del 4to snippet (AWS Lambda/Serverless ETL) y 5to snippet (Analytics Service Spec/QA Resilience).
+  - Implementación de descripciones técnicas bilingües enfocadas en resiliencia, mocks avanzados y orquestación de datos.
+  - Actualización de la biografía profesional en `cv-data-es.json`, `cv-data-en.json` y el componente `Profile` para incluir el enfoque en **Test-Driven Development (TDD)** como pilar fundamental de ingeniería.
+- **Testing**:
+  - Garantía de consistencia visual en los bloques de código (estilo Night Owl/Prism).
+
 ## [2026-02-04 11:30] - CV Download Fix & Analytics Instrumentation
 - **Bug Fix**:
   - Reemplazo del botón de descarga por un enlace nativo `<a>` con atributo `download`.

@@ -8,7 +8,7 @@
     "linkedin": "linkedin.com/in/pablo-matias-lescano",
     "career_start": "2016-12-01"
   },
-  "summary": "Senior Software Engineer and Tech Lead with +{{years}} years of experience evolving enterprise architectures towards modern Cloud & Data solutions on AWS. Experience leading data architectures (Custom DataLayer) for global clients like SunExpress. Expert in DDD, CQRS, and Medallion architectures.",
+  "summary": "Senior Software Engineer and Tech Lead with +{{years}} years of experience evolving enterprise architectures towards modern Cloud & Data solutions on AWS. Expert in Test-Driven Development (TDD), DDD, CQRS, and Medallion architectures. Experience leading data architectures (Custom DataLayer) for global clients like SunExpress.",
   "experience": [
     {
       "company": "Stack Overflight",
