@@ -51,9 +51,12 @@
               <span class="icon">⚡</span> {{ store.ui().switchToData }}
             </button>
             
-            <button class="btn-secondary" (click)="downloadCV()">
+            <a class="btn-secondary" 
+               [href]="cvUrl()" 
+               [download]="cvFileName()"
+               (click)="onDownloadClick()">
               <span class="icon">📄</span> {{ store.ui().downloadCV }}
-            </button>
+            </a>
           </div>
         </header>
 

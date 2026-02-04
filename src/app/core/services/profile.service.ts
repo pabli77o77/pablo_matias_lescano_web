@@ -9,7 +9,7 @@ import { UserProfile } from '@domain/models/profile.model';
 export class ProfileService {
   private http = inject(HttpClient);
 
-  getProfile(lang: 'es' | 'en'): Observable<UserProfile> {
+  getProfile(lang: 'es' | 'en' = 'es'): Observable<UserProfile> {
     return this.http.get<UserProfile>(`data/cv-data-${lang}.json`);
   }
 }

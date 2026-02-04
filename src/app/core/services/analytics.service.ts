@@ -83,6 +83,17 @@ export class AnalyticsService {
     }
   }
 
+  /**
+   * Método genérico para trackear eventos personalizados con carga útil.
+   * Proporciona la flexibilidad necesaria para instrumentación específica.
+   */
+  trackEvent(eventName: string, payload: Record<string, any> = {}) {
+    this.pushEvent({
+      event: eventName,
+      ...payload
+    });
+  }
+
   // --- Business Events (Domain Driven) ---
 
   /**
