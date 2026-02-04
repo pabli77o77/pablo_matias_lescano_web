@@ -1,5 +1,14 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 12:30] - Analytics Engineering: Snippet Telemetry Instrumentation
+- **Telemetría Granular**:
+  - Implementación del tracking de eventos `view_code_snippet` al interactuar con el acordeón de código.
+  - Captura dinámica de dimensiones: `snippet_name`, `snippet_category` (Frontend vs Cloud & Data) y `snippet_language`.
+  - Integración del sistema de telemetría resiliente para garantizar la captura de datos en presencia de AdBlockers.
+- **DX (Developer Experience)**:
+  - Inclusión de logs decorados en consola para modo desarrollo: "📊 Telemetría: Snippet [nombre] trackeado con éxito".
+- **ID Commit**: `8c2a4f1`
+
 ## [2026-02-04 12:15] - UI/UX Reorganization: End-to-End Engineering View
 - **Information Architecture**:
   - Reorganización de 'Code Snippets' en dos categorías estratégicas: "Frontend & App Architecture" y "Cloud & Data Engineering".
