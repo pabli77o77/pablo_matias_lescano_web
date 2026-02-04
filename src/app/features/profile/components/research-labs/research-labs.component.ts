@@ -37,12 +37,12 @@ export class ResearchLabsComponent {
     {
       id: 'fundamental-hub',
       name: 'Fundamental Intelligence Hub',
-      description: 'Plataforma RAG de inteligencia de mercado. Procesa video y RSS mediante Gemini 1.5 Pro y ChromaDB para scoring de analistas.',
-      techStack: ['Python', 'ChromaDB', 'Gemini 1.5', 'Whisper', 'Pydantic'],
+      description: 'Plataforma RAG de inteligencia de mercado. Procesa video y RSS mediante Gemini 2.0 Flash y ChromaDB para scoring de analistas.',
+      techStack: ['Python', 'ChromaDB', 'Gemini 2.0', 'Whisper', 'Pydantic'],
       url: 'https://github.com/pabli77o77/fundamental-intelligence-hub',
       icon: 'brain',
       theme: 'cyan',
-      badge: 'Arquitectura RAG con Gemini 1.5 Pro'
+      badge: 'Arquitectura RAG con Gemini 2.0 Flash'
     }
   ];
 
