@@ -1,5 +1,14 @@
 # Registro de Cambios - Web Pablo Matias Lescano
 
+## [2026-02-04 11:55] - Senior QA Strategy: Defensive Testing Snippet
+- **QA Automation & Resilience**:
+  - Refinamiento del 5to snippet (`analytics.service.spec.ts`) con enfoque en **Defensive Testing**.
+  - Implementación de lógica de validación de fallos silenciosos ante AdBlockers usando Jest Mocks (`spyOn`).
+  - Actualización de la descripción técnica en la UI destacando la estabilidad de flujos críticos y la robustez de la plataforma.
+- **UI/UX Consistency**:
+  - Verificación del layout tipo acordeón para asegurar la fluidez de los 5 snippets técnicos integrados.
+  - Sincronización de la narrativa de calidad de software en todo el portfolio.
+
 ## [2026-02-04 11:45] - QA Automation Snippet & TDD Bio Integration
 - **Content Strategy (Senior QA Culture)**:
   - Adición del 4to snippet (AWS Lambda/Serverless ETL) y 5to snippet (Analytics Service Spec/QA Resilience).

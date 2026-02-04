@@ -152,56 +152,52 @@ def lambda_handler(event, context):
     title: 'analytics.service.spec.ts (QA & Resilience)',
     language: 'typescript',
     description: {
-      es: 'Quality Assurance (Jest): Implementación de Testing Unitario y de Integración. Este snippet demuestra cómo garantizo la resiliencia de la capa de analítica mediante Mocks y validación de estados reactivos, asegurando una cobertura robusta en flujos críticos.',
-      en: 'Quality Assurance (Jest): Implementation of Unit and Integration Testing. This snippet demonstrates how I guarantee the resilience of the analytics layer through Mocks and validation of reactive states, ensuring robust coverage in critical flows.'
+      es: 'Quality Assurance (Jest): Implementación de Testing Unitario enfocado en la estabilidad de flujos críticos. Este snippet demuestra cómo garantizo la resiliencia de la capa de analítica mediante Mocks y validación de estados reactivos, asegurando que la plataforma sea robusta incluso ante fallos de servicios externos o bloqueadores de anuncios.',
+      en: 'Quality Assurance (Jest): Unit Testing implementation focused on the stability of critical flows. This snippet demonstrates how I guarantee the resilience of the analytics layer through Mocks and reactive state validation, ensuring the platform is robust even in the face of external service failures or ad blockers.'
     },
-    code: `/* 
- * Unit Testing: Analytics Resilience
- * Focus: Silent Degradation under AdBlockers
+    code: `/**
+ * DEFENSIVE TESTING STRATEGY: Analytics Resilience
+ * Objetivo: Validar que el sistema no colapse si el DataLayer es bloqueado (AdBlocker).
  */
 
-describe('AnalyticsService (QA Automation)', () => {
+describe('AnalyticsService (QA Resilience)', () => {
   let service: AnalyticsService;
-  let gtmMock: jest.Mocked<GoogleTagManagerService>;
+  let gtmService: GoogleTagManagerService;
 
   beforeEach(() => {
-    // 1. Mocking Global Infrastructure
-    (window as any).dataLayer = undefined; // Simulating Strict AdBlocker
+    // Escenario de Bloqueo: Simulamos que el objeto global no existe
+    delete (window as any).dataLayer;
     
-    gtmMock = {
-      pushTag: jest.fn().mockReturnValue(Promise.resolve())
-    } as any;
-
     TestBed.configureTestingModule({
       providers: [
         AnalyticsService,
-        { provide: GoogleTagManagerService, useValue: gtmMock }
+        { provide: GoogleTagManagerService, useValue: { pushTag: jest.fn() } }
       ]
     });
     service = TestBed.inject(AnalyticsService);
+    gtmService = TestBed.inject(GoogleTagManagerService);
   });
 
-  it('should not throw error when dataLayer is blocked', () => {
-    // 2. Act & Assert: The system must degrade gracefully
-    expect(() => {
-      service.trackEvent('conversion_test', { value: 100 });
-    }).not.toThrow();
+  describe('tracking resilience', () => {
+    it('should NOT throw exceptions when dataLayer is undefined', () => {
+      // Defensive Testing: Verificamos que el servicio degrade silenciosamente
+      // sin interrumpir el flujo del usuario principal (Fail-Safe).
+      expect(() => {
+        service.trackEvent('test_event', { category: 'qa' });
+      }).not.toThrow();
+    });
 
-    // 3. Verify interaction attempt
-    expect(gtmMock.pushTag).toHaveBeenCalled();
-  });
+    it('should call pushTag with correct parameters in normal conditions', () => {
+      // Restauramos mock para flujo normal
+      (window as any).dataLayer = [];
+      const spy = jest.spyOn(gtmService, 'pushTag');
+      
+      const testPayload = { event: 'ui_click', label: 'cta' };
+      service.trackEvent('ui_click', { label: 'cta' });
 
-  it('should maintain internal state even if GTM fails', () => {
-    const pushSpy = jest.spyOn(console, 'warn').mockImplementation();
-    
-    // Simulating GTM internal crash
-    gtmMock.pushTag.mockReturnValue(Promise.reject('Network Error'));
-    
-    service.trackEvent('critical_action');
-    
-    // UI remains interactive while analytics handles failure in background
-    expect(service.isInitialized()).toBe(true);
-    pushSpy.mockRestore();
+      // Verificación de integridad de datos enviados
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining(testPayload));
+    });
   });
 });`
   }
